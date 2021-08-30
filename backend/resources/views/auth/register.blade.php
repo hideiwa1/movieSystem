@@ -21,24 +21,7 @@
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
             </div>
 
-            <!-- Password -->
-            <div class="row g-0 mb-3 p-sm-3">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                 autocomplete="new-password" />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="row g-0 mb-3 p-sm-3">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" />
-            </div>
+            
 
             <div class="flex items-center justify-end mt-4">
                 

@@ -13,7 +13,7 @@ class Authenticate extends Middleware
      * @param  \Illuminate\Http\Request  $request
      * @return string|null
      */
-    protected string $trainer_route  = 'trainer.login';
+    protected string $trainer_route  = 'login';
     protected string $admin_route = 'admin.login';
 
     protected function redirectTo($request)

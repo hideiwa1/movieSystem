@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\TrainerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,11 +31,11 @@ Route::middleware('auth:trainers')->group(function () {
 });
 
 Route::middleware('auth:admins')->group(function () {
-    Route::get('/register', [RegisteredUserController::class, 'create'])
+    Route::get('/trainer-add', [RegisteredUserController::class, 'create'])
     ->name('register');
 });
 
-Route::post('/register', [RegisteredUserController::class, 'store'])
+Route::post('/trainer-add', [RegisteredUserController::class, 'store'])
     ->middleware('auth:admins');
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
@@ -82,3 +83,19 @@ Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth:trainers')
     ->name('logout');
+
+Route::get('/trainer-detail/{id}', [TrainerController::class, 'show'])
+    ->middleware('auth:trainers,admins')
+    ->name('trainer.detail');
+
+Route::get('/trainer-edit/{id?}', [TrainerController::class, 'edit'])
+    ->middleware('auth:trainers,admins')
+    ->name('trainer.edit');
+
+Route::post('/trainer-edit', [TrainerController::class, 'update'])
+    ->middleware('auth:trainers,admins')
+    ->name('trainer.update');
+
+Route::get('/trainer-list/{id?}', [TrainerController::class, 'list'])
+    ->middleware('auth:trainers,admins')
+    ->name('trainer.list');

@@ -1,9 +1,7 @@
 <x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
+<x-content>
+<x-slot name="subtitle">
+            ログイン<br>（管理者）
         </x-slot>
 
         <!-- Session Status -->
@@ -16,14 +14,14 @@
             @csrf
 
             <!-- Email Address -->
-            <div>
+            <div class="row g-0 mb-3 p-sm-3">
                 <x-label for="email" :value="__('Email')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
             </div>
 
             <!-- Password -->
-            <div class="mt-4">
+            <div class="row g-0 mb-3 p-sm-3">
                 <x-label for="password" :value="__('Password')" />
 
                 <x-input id="password" class="block mt-1 w-full"
@@ -31,6 +29,8 @@
                                 name="password"
                                 required autocomplete="current-password" />
             </div>
+
+
 
             <!-- Remember Me -->
             <div class="block mt-4">
@@ -52,5 +52,5 @@
                 </x-button>
             </div>
         </form>
-    </x-auth-card>
+</x-content>
 </x-guest-layout>

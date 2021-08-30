@@ -6,9 +6,11 @@
             </a>
         </x-slot>
 
+        @if(Auth::guard('trainers')->check())
         <div class="mb-4 text-sm text-gray-600">
             {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
         </div>
+        @endif
 
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -16,6 +18,7 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
+        @if(Auth::guard('trainers')->check())
         <form method="POST" action="{{ route('password.email') }}">
             @csrf
 
@@ -32,5 +35,10 @@
                 </x-button>
             </div>
         </form>
+        @elseif(Auth::guard('admins')->check())
+        <div class="row g-0 justify-content-center mb-3">
+            <a href="{{ route('register') }}" class="btn btn-primary col-lg-6 m-3">戻る</a>
+        </div>
+        @endif
     </x-auth-card>
 </x-guest-layout>

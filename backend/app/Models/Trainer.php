@@ -20,6 +20,14 @@ class Trainer extends Authenticatable
         'name',
         'email',
         'password',
+        'sex',
+        'birthday',
+        'club_id',
+        'create_flg',
+        'category_id',
+        'address',
+        'tel',
+        'status_flg'
     ];
 
     /**
@@ -40,4 +48,12 @@ class Trainer extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function category(){
+        return $this -> belongsTo('App\Models\TrainerCategory');
+    }
+
+    public function club(){
+        return $this -> belongsTo('App\Models\Club');
+    }
 }
