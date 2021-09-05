@@ -1,24 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {createStore, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-function Example() {
+import {SerchTrainer} from '../actions';
+
+const Example = () => {
+    
     return (
-        <div className="container">
-            <div className="row justify-content-center">
-                <div className="col-md-8">
-                    <div className="card">
-                        <div className="card-header">Example Component</div>
-
-                        <div className="card-body">I'm an example component!</div>
-                    </div>
-                </div>
-            </div>
+        <div className="dropdown col-lg-3 m-2 flex-grow-1">
+            Example
         </div>
-    );
-}
+        
+    )
+};
 
 export default Example;
-
-if (document.getElementById('example')) {
-    ReactDOM.render(<Example />, document.getElementById('example'));
-}

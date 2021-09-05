@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Trainer;
 use App\Models\TrainerCategory;
@@ -60,5 +61,18 @@ class TrainerController extends Controller
 
         $club_data = Club::get();
         return view('trainerList', ['trainer_data' => $trainer_data, 'club_data' => $club_data]);
+    }
+
+    public function Search(Request $request)
+    {
+        if(isset($request -> id)){
+            $trainer_data = Trainer::where('club_id', $request -> id) -> get();
+        }else{
+            $trainer_data = DB::table('trainers') 
+            -> select('trainers.*', 'clubs.name as club_name')
+            -> leftJoin('clubs', 'trainers.club_id', '=', 'clubs.id') -> get();
+        }
+
+        return $trainer_data;
     }
 }
