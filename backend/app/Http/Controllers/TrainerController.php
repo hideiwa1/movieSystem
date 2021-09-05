@@ -48,7 +48,7 @@ class TrainerController extends Controller
         $trainer -> save();
         $id = $trainer -> id;
 
-        return redirect(route('trainer.edit', ['id' => $id]));
+        return redirect(route('trainer.detail', ['id' => $id]));
     }
 
     public function List(Request $request)
@@ -65,13 +65,30 @@ class TrainerController extends Controller
 
     public function Search(Request $request)
     {
-        if(isset($request -> id)){
-            $trainer_data = Trainer::where('club_id', $request -> id) -> get();
+        \Log::debug('$request: '.$request -> club);
+
+        $sql = [];
+        
+        $keyword = $request -> keyword;
+        $club_id = $request -> club;
+        if($request -> status_on && $request -> status_off){
+            $status_flg = '';
+        }elseif($request -> status_on){
+            $status_flg = 1;
+        }elseif($request -> status_off){
+            $status_flg = 2;
         }else{
+            $status_flg = '';
+        }
+
+        $keyword && $sql[] = ['trainers.name', 'LIKE', '%'.$keyword.'%'];
+        $club_id && $sql[] = ['trainers.club_id', '=', $club_id];
+        $status_flg && $sql[] = ['tariners.status_flg', '=', $status_flg];
             $trainer_data = DB::table('trainers') 
             -> select('trainers.*', 'clubs.name as club_name')
+            -> where($sql)
             -> leftJoin('clubs', 'trainers.club_id', '=', 'clubs.id') -> get();
-        }
+        
 
         return $trainer_data;
     }

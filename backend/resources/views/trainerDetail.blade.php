@@ -3,7 +3,7 @@
     <x-content>
 
         <x-slot name="subtitle">
-            トレーナー詳細
+        <h2 class="col-lg-8 mb-0">トレーナー詳細</h2>
         </x-slot>
 
        
@@ -20,7 +20,7 @@
             <!-- sex -->
             <div class="row g-0 mb-3 p-sm-3">
                 <x-label-block for="email" :value="__('sex')" />
-                <x-input-data value="{{$trainer_data -> sex ?? '' }}" />
+                <x-input-data value="{{$trainer_data -> sex -> name ?? '' }}" />
             </div>
 
             <!-- birthday -->
@@ -64,13 +64,13 @@
             <!-- 体操コースメニュー作成権限 -->
             <div class="row g-0 mb-3 p-sm-3">
                 <x-label-block for="email" :value="__('体操コースメニュー作成権限')" />
-                <x-input-data value="{{$trainer_data -> create_flg ?? '' }}" />
+                <x-input-data value="{{$trainer_data -> create_flg == '1' ? '編集可': '編集不可' }}" />
             </div>
 
             <!-- status -->
             <div class="row g-0 mb-3 p-sm-3">
                 <x-label-block for="email" :value="__('status')" />
-                <x-input-data value="{{$trainer_data -> status ?? '' }}" />
+                <x-input-data value="{{$trainer_data -> status_flg == '1' ? '参加中': '退会' }}" />
             </div>
 
             <a href="studentList.html" class="btn btn-secondary w-100" type="button">
@@ -79,7 +79,7 @@
         </x-slot>
         </x-colum-2>
         <div class="row g-0 justify-content-center mb-3">
-                            <a href="trainerEdit.html" class="btn btn-primary col-lg-6 m-3">編集する</a>
+                            <a href="{{ route('trainer.edit' , ['id' => $trainer_data -> id]) }}" class="btn btn-primary col-lg-6 m-3">編集する</a>
                         </div>
     </x-content>
 </x-app-layout>

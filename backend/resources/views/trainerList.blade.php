@@ -24,7 +24,9 @@
 
     
         <x-slot name="subtitle">
-            トレーナー一覧
+        <h2 class="col-lg-8 mb-0">トレーナー一覧</h2>
+                        
+                            <div id="trainerCSV" class="btn btn-secondary col-lg-3 m-2 flex-shrink-1"></div>
         </x-slot>
         <div id="TrainerList"></div>
         

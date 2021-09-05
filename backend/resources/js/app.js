@@ -10,10 +10,11 @@ import {Provider} from 'react-redux';
 import rootReducer from './reducers';
 import thunkMiddleware from 'redux-thunk';
 
-import TrainerSerch from './components/trainerSerch'
-import TrainerList from './components/trainerList'
+import TrainerSerch from './components/trainerSerch';
+import TrainerList from './components/trainerList';
+import TrainerCSV from './components/trainerCSV';
 
-import Example from './components/Example'
+import Example from './components/Example';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -44,5 +45,14 @@ if (document.getElementById('TrainerList')) {
             <TrainerList />
         </Provider>,
     document.getElementById('TrainerList')
+    );
+}
+
+if (document.getElementById('trainerCSV')) {
+    ReactDOM.render(
+        <Provider store = {store} >
+            <TrainerCSV />
+        </Provider>,
+    document.getElementById('trainerCSV')
     );
 }

@@ -10,7 +10,6 @@ import {SerchTrainer} from '../actions';
 const TrainerList = () => {
     const {trainerData} = useSelector(selector);
 
-    console.log(trainerData);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -19,8 +18,8 @@ const TrainerList = () => {
         
     }, []);
 
-    const TrainerItems = trainerData ? trainerData.map((val) => (
-        <TrainerItem value={val} />
+    const TrainerItems = trainerData ? trainerData.map((val, index) => (
+        <TrainerItem value={val} key={index}/>
         )) : '';
 
     return (

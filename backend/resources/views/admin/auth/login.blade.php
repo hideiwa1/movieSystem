@@ -1,7 +1,7 @@
 <x-guest-layout>
 <x-content>
 <x-slot name="subtitle">
-            ログイン<br>（管理者）
+<h2 class="mb-0 text-center">ログイン<br>（管理者）</h2>
         </x-slot>
 
         <!-- Session Status -->

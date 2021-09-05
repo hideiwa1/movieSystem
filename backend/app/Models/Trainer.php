@@ -20,7 +20,7 @@ class Trainer extends Authenticatable
         'name',
         'email',
         'password',
-        'sex',
+        'sex_id',
         'birthday',
         'club_id',
         'create_flg',
@@ -55,5 +55,9 @@ class Trainer extends Authenticatable
 
     public function club(){
         return $this -> belongsTo('App\Models\Club');
+    }
+
+    public function sex(){
+        return $this -> belongsTo('App\Models\Sex');
     }
 }

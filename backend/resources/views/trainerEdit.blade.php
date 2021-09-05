@@ -3,7 +3,7 @@
     <x-content>
 
         <x-slot name="subtitle">
-            トレーナー情報　編集画面
+        <h2 class="col-lg-8 mb-0">トレーナー情報　編集画面</h2>
         </x-slot>
 
         <form method="POST" action="{{ route('trainer.update') }}">
@@ -25,7 +25,7 @@
                 <div class="mb-3">
                 @foreach($sex_data as $key => $val)
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="sex" value="{{$val['id']}}" {{ (old('sex') == $val['id'] ? 'checked': ($trainer_data -> sex == $val['id'])) ? 'checked': ''}}>
+                        <input class="form-check-input" type="radio" name="sex_id" value="{{$val['id']}}" {{ (old('sex') == $val['id'] ? 'checked': ($trainer_data -> sex_id == $val['id'])) ? 'checked': ''}}>
                         <label class="form-check-label" for="">{{$val['name']}}</label>
                     </div>
                 @endforeach

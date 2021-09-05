@@ -6983,14 +6983,15 @@ function receiveTrainerData(data) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./reducers */ "./resources/js/reducers/index.js");
 /* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 /* harmony import */ var _components_trainerSerch__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/trainerSerch */ "./resources/js/components/trainerSerch.js");
 /* harmony import */ var _components_trainerList__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/trainerList */ "./resources/js/components/trainerList.js");
-/* harmony import */ var _components_Example__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _components_trainerCSV__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/trainerCSV */ "./resources/js/components/trainerCSV.js");
+/* harmony import */ var _components_Example__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
@@ -7005,28 +7006,36 @@ __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
 
 
 
+
 var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-var store = (0,redux__WEBPACK_IMPORTED_MODULE_9__.createStore)(_reducers__WEBPACK_IMPORTED_MODULE_3__.default, composeEnhancers((0,redux__WEBPACK_IMPORTED_MODULE_9__.applyMiddleware)(redux_thunk__WEBPACK_IMPORTED_MODULE_4__.default)));
+var store = (0,redux__WEBPACK_IMPORTED_MODULE_10__.createStore)(_reducers__WEBPACK_IMPORTED_MODULE_3__.default, composeEnhancers((0,redux__WEBPACK_IMPORTED_MODULE_10__.applyMiddleware)(redux_thunk__WEBPACK_IMPORTED_MODULE_4__.default)));
 
 if (document.getElementById('TrainerSerch')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
     store: store,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_trainerSerch__WEBPACK_IMPORTED_MODULE_5__.default, {})
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_trainerSerch__WEBPACK_IMPORTED_MODULE_5__.default, {})
   }), document.getElementById('TrainerSerch'));
 }
 
 if (document.getElementById('Example')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
     store: store,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_Example__WEBPACK_IMPORTED_MODULE_7__.default, {})
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_Example__WEBPACK_IMPORTED_MODULE_8__.default, {})
   }), document.getElementById('Example'));
 }
 
 if (document.getElementById('TrainerList')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
     store: store,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_trainerList__WEBPACK_IMPORTED_MODULE_6__.default, {})
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_trainerList__WEBPACK_IMPORTED_MODULE_6__.default, {})
   }), document.getElementById('TrainerList'));
+}
+
+if (document.getElementById('trainerCSV')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+    store: store,
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_trainerCSV__WEBPACK_IMPORTED_MODULE_7__.default, {})
+  }), document.getElementById('trainerCSV'));
 }
 
 /***/ }),
@@ -7109,6 +7118,96 @@ var Example = function Example() {
 
 /***/ }),
 
+/***/ "./resources/js/components/trainerCSV.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/trainerCSV.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions */ "./resources/js/actions/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+
+
+
+
+var TrainerCSV = function TrainerCSV() {
+  var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(selector),
+      keyword = _useSelector.keyword,
+      club = _useSelector.club,
+      status_on = _useSelector.status_on,
+      status_off = _useSelector.status_off;
+
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
+
+  var handleTrainerToCSV = function handleTrainerToCSV(e) {
+    e.preventDefault();
+    axios__WEBPACK_IMPORTED_MODULE_4___default().get('/api/trainer-list', {
+      params: [keyword, club, status_on, status_off]
+    }).then(function (res) {
+      var CSVdata = res.data;
+      var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+      var data_csv = '';
+      data_csv += "トレーナー名,所属\n";
+      CSVdata.forEach(function (item) {
+        data_csv += item.name + "," + item.club_name + "\n";
+      });
+      console.log(data_csv);
+      var blob = new Blob([bom, data_csv], {
+        "type": "text/csv"
+      }); //data_csvのデータをcsvとしてダウンロードする関数
+
+      var url = window.URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "sampleData.csv"; //フォーマットによってファイル拡張子を変えている
+
+      a.click();
+      a.remove();
+      data_csv = '';
+    })["catch"](function (error) {});
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
+    href: "#",
+    className: "w-100 text-white",
+    onClick: function onClick(e) {
+      handleTrainerToCSV(e);
+    },
+    id: "download",
+    download: "test.csv",
+    children: "CSV\u51FA\u529B"
+  });
+};
+
+var selector = function selector(state) {
+  return {
+    keyword: state.trainerSerch.keyword,
+    club: state.trainerSerch.club,
+    status_on: state.trainerSerch.status_on,
+    status_off: state.trainerSerch.status_off
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TrainerCSV);
+
+/***/ }),
+
 /***/ "./resources/js/components/trainerItem.js":
 /*!************************************************!*\
   !*** ./resources/js/components/trainerItem.js ***!
@@ -7135,30 +7234,30 @@ __webpack_require__.r(__webpack_exports__);
 
 var TrainerItem = function TrainerItem(props) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-    "class": "mb-3 border-bottom",
+    className: "mb-3 border-bottom",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-      "class": "row g-0 align-items-stretch p-2",
+      className: "row g-0 align-items-stretch p-2",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-        "class": "col-lg-3 d-flex align-items-center",
+        className: "col-lg-3 d-flex align-items-center",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
           children: props.value.name
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-        "class": "col-lg-2 d-flex align-items-center",
+        className: "col-lg-2 d-flex align-items-center",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
           children: props.value.club_name
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-        "class": "col-lg-7 d-flex align-items-center",
+        className: "col-lg-7 d-flex align-items-center",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-          "class": "row g-0 flex-grow-1 text-center justify-content-around",
+          className: "row g-0 flex-grow-1 text-center justify-content-around",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
             href: "trainer-detail/" + props.value.id,
-            "class": "col-sm-3 btn btn-secondary m-2",
+            className: "col-sm-3 btn btn-secondary m-2",
             children: "\u8A73\u7D30"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
             href: "studentList.html",
-            "class": "col-sm-3 btn btn-secondary m-2",
+            className: "col-sm-3 btn btn-secondary m-2",
             children: "\u62C5\u5F53\u751F\u5F92\u4E00\u89A7"
           })]
         })
@@ -7207,10 +7306,10 @@ var TrainerList = function TrainerList() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_4__.SerchTrainer)(''));
   }, []);
-  var TrainerItems = trainerData ? trainerData.map(function (val) {
+  var TrainerItems = trainerData ? trainerData.map(function (val, index) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_trainerItem__WEBPACK_IMPORTED_MODULE_3__.default, {
       value: val
-    });
+    }, index);
   }) : '';
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
     children: TrainerItems
@@ -7362,7 +7461,6 @@ var TrainerSerch = function TrainerSerch() {
                 value: values.club,
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
                   value: "",
-                  selected: true,
                   children: "\u5168\u3066"
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
                   value: "1",
@@ -7387,7 +7485,7 @@ var TrainerSerch = function TrainerSerch() {
                   checked: values.status_on
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
                   className: "form-check-label",
-                  "for": "",
+                  htmlFor: "",
                   children: "\u53C2\u52A0\u4E2D"
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
@@ -7403,7 +7501,7 @@ var TrainerSerch = function TrainerSerch() {
                   checked: values.status_off
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
                   className: "form-check-label",
-                  "for": "",
+                  htmlFor: "",
                   children: "\u9000\u4F1A"
                 })]
               })]
@@ -7420,6 +7518,8 @@ var TrainerSerch = function TrainerSerch() {
               type: "submit",
               form: "mainform",
               className: "btn btn-primary col-lg-4",
+              "data-bs-dismiss": "modal",
+              "data-bs-target": "#exampleModal",
               children: "\u691C\u7D22\u3059\u308B"
             })]
           })]

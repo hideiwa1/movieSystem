@@ -3,7 +3,7 @@
     <x-content>
 
         <x-slot name="subtitle">
-            トレーナー追加
+        <h2 class="mb-0 text-center">トレーナー追加</h2>
         </x-slot>
 
         <!-- Validation Errors -->

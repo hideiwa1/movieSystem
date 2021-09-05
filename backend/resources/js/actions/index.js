@@ -35,3 +35,4 @@ function receiveTrainerData(data) {
         data: data
     }
 }
+
