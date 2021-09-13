@@ -25,7 +25,7 @@
                 <div class="mb-3">
                 @foreach($sex_data as $key => $val)
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="sex_id" value="{{$val['id']}}" {{ (old('sex') == $val['id'] ? 'checked': ($trainer_data -> sex_id == $val['id'])) ? 'checked': ''}}>
+                        <input class="form-check-input" type="radio" name="sex_id" value="{{$val['id']}}" {{ (old('sex') == $val['id'] ? 'checked': ($trainer_data ? ($trainer_data -> sex_id == $val['id']) :'' ) ) ? 'checked': ''}}>
                         <label class="form-check-label" for="">{{$val['name']}}</label>
                     </div>
                 @endforeach
@@ -44,7 +44,7 @@
                 <div class="">
                     <select class="form-select" name="club_id" aria-label="Default select example">
                         <@foreach($club_data as $key => $val)
-                            <option value="{{$val['id']}}" {{ (old('club_id') == $val['id'] ? 'checked': ($trainer_data -> club_id == $val['id'])) ? 'selected': ''}}>{{$val['name']}}</option>
+                            <option value="{{$val['id']}}" {{ (old('club_id') == $val['id'] ? 'checked': ($trainer_data ? ($trainer_data -> club_id == $val['id']) :'' ) ) ? 'selected': ''}}>{{$val['name']}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -56,7 +56,7 @@
                 <div class="">
                     <select class="form-select" name="category_id" aria-label="Default select example">
                         <@foreach($category_data as $key => $val)
-                            <option value="{{$val['id']}}" {{ (old('category_id') == $val['id'] ? 'checked': ($trainer_data -> category_id == $val['id'])) ? 'selected': ''}}>{{$val['name']}}</option>
+                            <option value="{{$val['id']}}" {{ (old('category_id') == $val['id'] ? 'checked': ($trainer_data ? ($trainer_data -> category_id == $val['id']) :'' ) ) ? 'selected': ''}}>{{$val['name']}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -87,11 +87,11 @@
                 <x-label-block for="create_flg" :value="__('体操コースメニュー作成権限')" />
                 <div class="mb-3">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="create_flg" value="1" {{ (old('create_flg') == '1' ? 'checked': ($trainer_data -> create_flg == '1')) ? 'checked': ''}}>
+                        <input class="form-check-input" type="radio" name="create_flg" value="1" {{ (old('create_flg') == '1' ? 'checked': ($trainer_data ? ($trainer_data -> create_flg == '1') :'' ) ) ? 'checked': ''}}>
                         <label class="form-check-label" for="">登録可</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="create_flg" value="2" {{ (old('create_flg') == '2' ? 'checked': ($trainer_data -> create_flg == '2')) ? 'checked': ''}}>
+                        <input class="form-check-input" type="radio" name="create_flg" value="2" {{ (old('create_flg') == '2' ? 'checked': ($trainer_data ? ($trainer_data -> create_flg == '2') :'' ) ) ? 'checked': ''}}>
                         <label class="form-check-label" for="">登録不可</label>
                     </div>
                 </div>
@@ -102,11 +102,11 @@
                 <x-label-block for="status_flg" :value="__('status')" />
                 <div class="mb-3">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="status_flg" value="1" {{ (old('status_flg') == '1' ? 'checked': ($trainer_data -> status_flg == '1')) ? 'checked': ''}}>
+                        <input class="form-check-input" type="radio" name="status_flg" value="1" {{ (old('status_flg') == '1' ? 'checked': ($trainer_data ? ($trainer_data -> status_flg == '1') :'' ) ) ? 'checked': ''}}>
                         <label class="form-check-label" for="">参加中</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="status_flg" value="2" {{ (old('status_flg') == '2' ? 'checked': ($trainer_data -> status_flg == '2')) ? 'checked': ''}}>
+                        <input class="form-check-input" type="radio" name="status_flg" value="2" {{ (old('status_flg') == '2' ? 'checked': ($trainer_data ? ($trainer_data -> status_flg == '2') :'' ) ) ? 'checked': ''}}>
                         <label class="form-check-label" for="">退会</label>
                     </div>
                 </div>

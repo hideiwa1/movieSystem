@@ -13,9 +13,20 @@ const TrainerSerch = () => {
         club: "",
         status_on: false,
         status_off: false,
+        club_list: "",
       });
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        
+        axios.get('/api/club-list/')
+        .then((res) => {
+            setValues({...values, ['club_list']: res.data});
+        })
+        .catch((error)=>{});
+    
+    }, []);
 
     const handleTrainerSerch = (e) => {
         e.preventDefault();
@@ -32,6 +43,10 @@ const TrainerSerch = () => {
         const name = e.target.value;
 		setValues({...values, [name]: e.target.checked});
     };
+
+    const ClubLists = values.club_list ? values.club_list.map((val, index) => (
+        <option value={val.id} key={index}>{val.name}</option>
+        )) : '';
 
     return (
         <div>
@@ -58,8 +73,7 @@ const TrainerSerch = () => {
                                 <select className="form-select mb-3" aria-label="Default select example" name='club' onChange={(e)=>{handleChange(e);}} value={values.club}>
                                     <option value=''>全て</option>
                                     
-                                    <option value="1">club1</option>
-                                    <option value="2">club2</option>
+                                    {ClubLists}
                                     
                                 </select>
 

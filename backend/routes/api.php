@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\TrainerController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentClassController;
+use App\Http\Controllers\ClubController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +24,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/trainer-list', [TrainerController::class, 'search']);
+Route::get('/trainer-csv', [TrainerController::class, 'csv']);
+
+Route::get('/student-list', [StudentController::class, 'search']);
+Route::get('/student-csv', [StudentController::class, 'csv']);
+
+Route::get('/class-list', [StudentClassController::class, 'list']);
+Route::get('/club-list', [ClubController::class, 'list']);

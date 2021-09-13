@@ -60,4 +60,8 @@ class Trainer extends Authenticatable
     public function sex(){
         return $this -> belongsTo('App\Models\Sex');
     }
+
+    public function students(){
+        return $this -> hasMany('App\Models\Student');
+    }
 }

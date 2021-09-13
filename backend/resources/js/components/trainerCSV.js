@@ -15,7 +15,7 @@ const TrainerCSV = () => {
 
     const handleTrainerToCSV = (e) => {
         e.preventDefault();
-        axios.get('/api/trainer-list', {params: [keyword, club, status_on, status_off]})
+        axios.get('/api/trainer-csv', {params: [keyword, club, status_on, status_off]})
         .then((res) => {
             const CSVdata = res.data;
             const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);

@@ -71,11 +71,11 @@ class TrainerController extends Controller
         
         $keyword = $request -> keyword;
         $club_id = $request -> club;
-        if($request -> status_on && $request -> status_off){
+        if($request -> status_on == 'true' && $request -> status_off == 'true'){
             $status_flg = '';
-        }elseif($request -> status_on){
+        }elseif($request -> status_on == 'true'){
             $status_flg = 1;
-        }elseif($request -> status_off){
+        }elseif($request -> status_off == 'true'){
             $status_flg = 2;
         }else{
             $status_flg = '';
@@ -83,12 +83,41 @@ class TrainerController extends Controller
 
         $keyword && $sql[] = ['trainers.name', 'LIKE', '%'.$keyword.'%'];
         $club_id && $sql[] = ['trainers.club_id', '=', $club_id];
-        $status_flg && $sql[] = ['tariners.status_flg', '=', $status_flg];
+        $status_flg && $sql[] = ['trainers.status_flg', '=', $status_flg];
             $trainer_data = DB::table('trainers') 
             -> select('trainers.*', 'clubs.name as club_name')
             -> where($sql)
-            -> leftJoin('clubs', 'trainers.club_id', '=', 'clubs.id') -> get();
+            -> leftJoin('clubs', 'trainers.club_id', '=', 'clubs.id') 
+            -> paginate(10);
         
+
+        return $trainer_data;
+    }
+
+    public function csv(Request $request)
+    {
+        $sql = [];
+        
+        $keyword = $request -> keyword;
+        $club_id = $request -> club;
+        if($request -> status_on == 'true' && $request -> status_off == 'true'){
+            $status_flg = '';
+        }elseif($request -> status_on == 'true'){
+            $status_flg = 1;
+        }elseif($request -> status_off == 'true'){
+            $status_flg = 2;
+        }else{
+            $status_flg = '';
+        }
+
+        $keyword && $sql[] = ['trainers.name', 'LIKE', '%'.$keyword.'%'];
+        $club_id && $sql[] = ['trainers.club_id', '=', $club_id];
+        $status_flg && $sql[] = ['trainers.status_flg', '=', $status_flg];
+            $trainer_data = DB::table('trainers') 
+            -> select('trainers.*', 'clubs.name as club_name')
+            -> where($sql)
+            -> leftJoin('clubs', 'trainers.club_id', '=', 'clubs.id') 
+            -> get();
 
         return $trainer_data;
     }

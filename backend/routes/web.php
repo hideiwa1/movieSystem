@@ -11,6 +11,11 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\TrainerController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\MailController;
+use App\Http\Controllers\CourceController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,9 +27,9 @@ use App\Http\Controllers\TrainerController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('index');
+Route::get('/', [CourceController::class, 'index'])
+    ->middleware('auth:trainers,admins')
+    ->name('index');
 
 Route::middleware('auth:trainers')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -99,3 +104,31 @@ Route::post('/trainer-edit', [TrainerController::class, 'update'])
 Route::get('/trainer-list/{id?}', [TrainerController::class, 'list'])
     ->middleware('auth:trainers,admins')
     ->name('trainer.list');
+
+Route::get('/student-detail/{id}', [StudentController::class, 'show'])
+    ->middleware('auth:trainers,admins')
+    ->name('student.detail');
+
+Route::get('/student-edit/{id?}', [StudentController::class, 'edit'])
+    ->middleware('auth:trainers,admins')
+    ->name('student.edit');
+
+Route::post('/student-edit', [StudentController::class, 'update'])
+    ->middleware('auth:trainers,admins')
+    ->name('student.update');
+
+Route::get('/student-list', [StudentController::class, 'list'])
+    ->middleware('auth:trainers,admins')
+    ->name('student.list');
+
+Route::get('/mail', [MailController::class, 'show'])
+    ->middleware('auth:trainers,admins')
+    ->name('mail.show');
+
+Route::post('/mail', [MailController::class, 'select'])
+    ->middleware('auth:trainers,admins')
+    ->name('mail.select');
+
+Route::post('/mail-send', [MailController::class, 'send'])
+    ->middleware('auth:trainers,admins')
+    ->name('mail.send');

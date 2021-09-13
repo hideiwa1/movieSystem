@@ -14,6 +14,10 @@ import TrainerSerch from './components/trainerSerch';
 import TrainerList from './components/trainerList';
 import TrainerCSV from './components/trainerCSV';
 
+import StudentSerch from './components/studentSerch';
+import StudentList from './components/studentList';
+import StudentCSV from './components/studentCSV';
+
 import Example from './components/Example';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -21,21 +25,21 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
-if (document.getElementById('TrainerSerch')) {
-    ReactDOM.render(
-        <Provider store = {store} >
-            <TrainerSerch />
-        </Provider>,
-    document.getElementById('TrainerSerch')
-    );
-}
-
 if (document.getElementById('Example')) {
     ReactDOM.render(
         <Provider store = {store} >
             <Example />
         </Provider>,
     document.getElementById('Example')
+    );
+}
+
+if (document.getElementById('TrainerSerch')) {
+    ReactDOM.render(
+        <Provider store = {store} >
+            <TrainerSerch />
+        </Provider>,
+    document.getElementById('TrainerSerch')
     );
 }
 
@@ -48,11 +52,38 @@ if (document.getElementById('TrainerList')) {
     );
 }
 
-if (document.getElementById('trainerCSV')) {
+if (document.getElementById('TrainerCSV')) {
     ReactDOM.render(
         <Provider store = {store} >
             <TrainerCSV />
         </Provider>,
-    document.getElementById('trainerCSV')
+    document.getElementById('TrainerCSV')
+    );
+}
+
+if (document.getElementById('StudentSerch')) {
+    ReactDOM.render(
+        <Provider store = {store} >
+            <StudentSerch />
+        </Provider>,
+    document.getElementById('StudentSerch')
+    );
+}
+
+if (document.getElementById('StudentList')) {
+    ReactDOM.render(
+        <Provider store = {store} >
+            <StudentList />
+        </Provider>,
+    document.getElementById('StudentList')
+    );
+}
+
+if (document.getElementById('StudentCSV')) {
+    ReactDOM.render(
+        <Provider store = {store} >
+            <StudentCSV />
+        </Provider>,
+    document.getElementById('StudentCSV')
     );
 }
