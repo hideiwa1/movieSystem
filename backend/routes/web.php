@@ -132,3 +132,11 @@ Route::post('/mail', [MailController::class, 'select'])
 Route::post('/mail-send', [MailController::class, 'send'])
     ->middleware('auth:trainers,admins')
     ->name('mail.send');
+
+Route::get('/movie-edit/{id?}', [MovieController::class, 'edit'])
+    ->middleware('auth:trainers,admins')
+    ->name('movie.edit');
+
+Route::post('/movie-edit', [MovieController::class, 'update'])
+    ->middleware('auth:trainers,admins')
+    ->name('movie.update');
