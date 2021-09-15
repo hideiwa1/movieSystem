@@ -9,4 +9,15 @@ class Movie extends Model
 {
     use HasFactory;
     
+    protected $fillable = [
+        'name',
+        'filepath',
+        'comment',
+        'category_id',
+        'open_flg'
+    ];
+
+    public function category(){
+        return $this -> belongsTo('App\Models\MovieCategory');
+    }
 }

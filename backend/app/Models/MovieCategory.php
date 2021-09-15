@@ -9,7 +9,7 @@ class MovieCategory extends Model
 {
     use HasFactory;
 
-    public function trainers(){
-        return $this -> hasMany('App\Models\Trainer');
+    public function movies(){
+        return $this -> hasMany('App\Models\Movie');
     }
 }

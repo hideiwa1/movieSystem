@@ -1,5 +1,9 @@
 <x-app-layout>
 
+    <x-breadcrumb>
+        <li class="breadcrumb-item"><a href="#">Library</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Data</li>
+    </x-breadcrumb>
     <x-content>
 
     <x-slot name="submenu">

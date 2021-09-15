@@ -14,6 +14,7 @@ use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\CourceController;
+use App\Http\Controllers\MovieController;
 
 
 /*

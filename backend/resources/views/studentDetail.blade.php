@@ -1,9 +1,13 @@
 <x-app-layout>
 
+    <x-breadcrumb>
+        <li class="breadcrumb-item"><a href="{{ route('student.list') }}">生徒一覧</a></li>
+        <li class="breadcrumb-item active" aria-current="page">生徒詳細</li>
+    </x-breadcrumb>
     <x-content>
 
         <x-slot name="subtitle">
-        <h2 class="col-lg-8 mb-0">トレーナー詳細</h2>
+        <h2 class="col-lg-8 mb-0">生徒詳細</h2>
         </x-slot>
 
        

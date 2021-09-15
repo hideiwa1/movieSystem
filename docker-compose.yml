@@ -48,7 +48,7 @@ services:
       - type: bind
         source: ./backend
         target: /work/backend
-
+    
   db:
     build:
       context: .

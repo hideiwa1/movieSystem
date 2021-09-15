@@ -30,9 +30,6 @@
                 @include('layouts.sidebar')
 
                 <section class="col-lg-9 p-3">
-                    <h1 class="border text-center p-2 mb-3">
-                        システム名
-                    </h1>
 
                     {{ $slot }}
                 </section>

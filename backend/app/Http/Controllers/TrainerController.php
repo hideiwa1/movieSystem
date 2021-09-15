@@ -22,7 +22,11 @@ class TrainerController extends Controller
     public function edit(Request $request)
     {
         $id = $request -> id ?? '';
-        $trainer_data = Trainer::find($id);
+        if(empty($id)){
+            $trainer_data = '';
+        }else{
+            $trainer_data = Trainer::find($id);
+        }
 
         $category_data = TrainerCategory::get();
         $sex_data = Sex::get();
