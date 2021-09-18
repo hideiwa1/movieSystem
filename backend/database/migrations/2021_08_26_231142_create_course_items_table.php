@@ -18,9 +18,9 @@ class CreateCourseItemsTable extends Migration
             $table->integer('course_id')->comment('コースID');
             $table->integer('movie_id')->comment('動画');
             $table->integer('order')->comment('並び順');
-            $table->boolean('delete_flg')->default(0);
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

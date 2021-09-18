@@ -14,21 +14,21 @@ class SexTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('sex')->insert([
+        DB::table('sexes')->insert([
             [
                 'id' => 1,
                 'name' => '男',
-                'delete_flg' => false
+
             ],
             [
                 'id' => 2,
                 'name' => '女',
-                'delete_flg' => false
+
             ],
             [
                 'id' => 3,
                 'name' => 'その他',
-                'delete_flg' => false
+
             ],
         ]);
     }

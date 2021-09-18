@@ -20,9 +20,9 @@ class CreateMoviesTable extends Migration
             $table->text('comment');
             $table->integer('category_id');
             $table->boolean('open_flg')->default(0);
-            $table->boolean('delete_flg')->default(0);
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

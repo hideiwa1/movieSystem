@@ -5,12 +5,15 @@ export const FETCH_TRAINER_SUCCESS = "FETCH_TRAINER_SUCCESS";
 export const FETCH_STUDENT_REQUEST = "FETCH_STUDENT_REQUEST";
 export const FETCH_STUDENT_SUCCESS = "FETCH_STUDENT_SUCCESS";
 
-export const SerchTrainer = (value) => {
+export const FETCH_MOVIE_REQUEST = "FETCH_MOVIE_REQUEST";
+export const FETCH_MOVIE_SUCCESS = "FETCH_MOVIE_SUCCESS";
+
+export const SerchTrainer = (value, page = 1) => {
     return dispatch => {
         dispatch(requestTrainerData(value));
 
         return axios
-            .get('/api/trainer-list', {params: value})
+            .get('/api/trainer-list?page=' + page, {params: value})
             .then((res) => {
                 dispatch(receiveTrainerData(res.data));
             })
@@ -56,6 +59,33 @@ function requestStudentData(data) {
 function receiveStudentData(data) {
     return {
         type: "FETCH_STUDENT_SUCCESS",
+        data: data
+    }
+}
+
+export const SerchMovie = (value, page = 1) => {
+    return dispatch => {
+        dispatch(requestMovieData(value));
+
+        return axios
+            .get('/api/movie-list?page=' + page, {params: value})
+            .then((res) => {
+                dispatch(receiveMovieData(res.data));
+            })
+            .catch((error)=>{});
+    };
+};
+
+function requestMovieData(data) {
+    return {
+        type: "FETCH_MOVIE_REQUEST",
+        data: data
+    }
+}
+
+function receiveMovieData(data) {
+    return {
+        type: "FETCH_MOVIE_SUCCESS",
         data: data
     }
 }

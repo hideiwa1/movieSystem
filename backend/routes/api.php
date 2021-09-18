@@ -7,6 +7,8 @@ use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentClassController;
 use App\Http\Controllers\ClubController;
+use App\Http\Controllers\MovieCategoryController;
+use App\Http\Controllers\MovieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,5 +31,8 @@ Route::get('/trainer-csv', [TrainerController::class, 'csv']);
 Route::get('/student-list', [StudentController::class, 'search']);
 Route::get('/student-csv', [StudentController::class, 'csv']);
 
+Route::get('/movie-list', [MovieController::class, 'search']);
+
 Route::get('/class-list', [StudentClassController::class, 'list']);
+Route::get('/movie-category-list', [MovieCategoryController::class, 'list']);
 Route::get('/club-list', [ClubController::class, 'list']);

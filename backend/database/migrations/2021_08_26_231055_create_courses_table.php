@@ -22,9 +22,9 @@ class CreateCoursesTable extends Migration
             $table->boolean('open_flg')->default(0);
             $table->datetime('start_at');
             $table->datetime('end_at');
-            $table->boolean('delete_flg')->default(0);
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

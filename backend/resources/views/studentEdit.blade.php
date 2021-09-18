@@ -3,7 +3,7 @@
     <x-content>
 
         <x-slot name="subtitle">
-        <h2 class="col-lg-8 mb-0">トレーナー情報　編集画面</h2>
+        <h2 class="col-lg-8 mb-0">生徒情報　編集画面</h2>
         </x-slot>
 
         <form method="POST" action="{{ route('student.update') }}">

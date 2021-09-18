@@ -14,26 +14,22 @@ class ClassesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('classes')->insert([
+        DB::table('student_classes')->insert([
             [
                 'id' => 1,
                 'name' => 'class1',
-                'delete_flg' => false
             ],
             [
                 'id' => 2,
                 'name' => 'class2',
-                'delete_flg' => false
             ],
             [
                 'id' => 3,
                 'name' => 'class3',
-                'delete_flg' => false
             ],
             [
                 'id' => 4,
                 'name' => 'class4',
-                'delete_flg' => false
             ],
         ]);
     }

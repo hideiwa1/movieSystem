@@ -16,9 +16,9 @@ class CreateMovieCategoriesTable extends Migration
         Schema::create('movie_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('delete_flg')->default(0);
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

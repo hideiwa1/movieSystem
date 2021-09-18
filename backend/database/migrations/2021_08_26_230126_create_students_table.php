@@ -25,10 +25,10 @@ class CreateStudentsTable extends Migration
             $table->string('class_id')->nullable()->comment('クラス');
             $table->text('comment')->nullable()->comment('備考');
             $table->boolean('status_flg')->nullable()->comment('ステータス');
-            $table->boolean('delete_flg')->default(0);
             $table->rememberToken();
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

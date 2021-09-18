@@ -27,10 +27,10 @@ class CreateTrainersTable extends Migration
             $table->string('address')->nullable();
             $table->string('tel')->nullable();
             $table->boolean('status_flg')->nullable()->comment('ステータス');
-            $table->boolean('delete_flg')->default(0);
             $table->rememberToken();
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

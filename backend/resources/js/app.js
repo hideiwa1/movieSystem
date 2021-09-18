@@ -18,6 +18,11 @@ import StudentSerch from './components/studentSerch';
 import StudentList from './components/studentList';
 import StudentCSV from './components/studentCSV';
 
+import MovieSerch from './components/movieSerch';
+import MovieList from './components/movieList';
+
+import CourseEdit from './components/courseEdit';
+
 import Example from './components/Example';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -85,5 +90,32 @@ if (document.getElementById('StudentCSV')) {
             <StudentCSV />
         </Provider>,
     document.getElementById('StudentCSV')
+    );
+}
+
+if (document.getElementById('MovieSerch')) {
+    ReactDOM.render(
+        <Provider store = {store} >
+            <MovieSerch />
+        </Provider>,
+    document.getElementById('MovieSerch')
+    );
+}
+
+if (document.getElementById('MovieList')) {
+    ReactDOM.render(
+        <Provider store = {store} >
+            <MovieList />
+        </Provider>,
+    document.getElementById('MovieList')
+    );
+}
+
+if (document.getElementById('CourseEdit')) {
+    ReactDOM.render(
+        <Provider store = {store} >
+            <CourseEdit />
+        </Provider>,
+    document.getElementById('CourseEdit')
     );
 }

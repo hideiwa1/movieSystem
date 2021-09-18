@@ -13,7 +13,7 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\MailController;
-use App\Http\Controllers\CourceController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\MovieController;
 
 
@@ -141,3 +141,23 @@ Route::get('/movie-edit/{id?}', [MovieController::class, 'edit'])
 Route::post('/movie-edit', [MovieController::class, 'update'])
     ->middleware('auth:trainers,admins')
     ->name('movie.update');
+
+Route::post('/movie-delete/{id}', [MovieController::class, 'delete'])
+    ->middleware('auth:trainers,admins')
+    ->name('movie.delete');
+
+Route::get('/movie-detail/{id}', [MovieController::class, 'show'])
+    ->middleware('auth:trainers,admins')
+    ->name('movie.detail');
+
+Route::get('/movie-list', [MovieController::class, 'list'])
+    ->middleware('auth:trainers,admins')
+    ->name('movie.list');
+
+Route::get('/course-edit/{id?}', [CourseController::class, 'edit'])
+    ->middleware('auth:trainers,admins')
+    ->name('course.edit');
+
+Route::post('/course-edit', [CourseController::class, 'update'])
+    ->middleware('auth:trainers,admins')
+    ->name('course.update');

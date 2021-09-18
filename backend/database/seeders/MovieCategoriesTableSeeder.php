@@ -18,22 +18,22 @@ class MovieCategoriesTableSeeder extends Seeder
             [
                 'id' => 1,
                 'name' => 'category1',
-                'delete_flg' => false
+
             ],
             [
                 'id' => 2,
                 'name' => 'category2',
-                'delete_flg' => false
+
             ],
             [
                 'id' => 3,
                 'name' => 'category3',
-                'delete_flg' => false
+
             ],
             [
                 'id' => 4,
                 'name' => 'category4',
-                'delete_flg' => false
+
             ],
         ]);
     }

@@ -18,22 +18,20 @@ class ClubsTableSeeder extends Seeder
             [
                 'id' => 1,
                 'name' => 'club1',
-                'delete_flg' => false
+
             ],
             [
                 'id' => 2,
                 'name' => 'club2',
-                'delete_flg' => false
             ],
             [
                 'id' => 3,
                 'name' => 'club3',
-                'delete_flg' => false
             ],
             [
                 'id' => 4,
                 'name' => 'club4',
-                'delete_flg' => false
+
             ],
         ]);
     }

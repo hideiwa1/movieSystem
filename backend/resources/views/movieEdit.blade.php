@@ -65,6 +65,11 @@
     background-color: #0dcaf0;
 }
 </style>
+@if($movie_data)
+<form id="deleteForm" method="POST" action="{{ route('movie.delete', ['id' => $movie_data -> id]) }}" hidden>
+            @csrf
+</form>
+@endif
 
         <form method="POST" action="{{ route('movie.update') }}" enctype="multipart/form-data" class="form">
             @csrf
@@ -76,9 +81,9 @@
             <!-- name -->
             <div class="mb-3">
                 <label class="area-drop">
-                    <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
+                    <input type="hidden" name="MAX_FILE_SIZE" value="314572800">
                     <input type="file" name="movie" class="input-file">
-                    <video src="" alt="" class="prev-img">
+                    <video src="{{ $movie_data -> filepath ?? '' }}" alt="" class="prev-img">
                     </video>
                     <span class="d-d">ドラッグ＆ドロップ</span>
                 </label>
@@ -90,7 +95,7 @@
         <x-slot name="right">
             <!-- email -->
             <div class="mb-3">
-                <x-label-block for="name :value="__('タイトル')" />
+                <x-label-block for="name" :value="__('タイトル')" />
                 <x-input-block id="name" class="block mt-1 w-full" type="text" name="name" :value="$movie_data -> name ?? old('name')" />
             </div>
 
@@ -99,7 +104,7 @@
             <x-label-block for="category_id" :value="__('category')" />
                 <div class="">
                     <select class="form-select" name="category_id" aria-label="Default select example">
-                        <@foreach($category_data as $key => $val)
+                        @foreach($category_data as $key => $val)
                             <option value="{{$val['id']}}" {{ (old('category_id') == $val['id'] ? 'checked': ($movie_data ? ($movie_data -> category_id == $val['id']) :'' ) ) ? 'selected': ''}}>{{$val['name']}}</option>
                         @endforeach
                     </select>

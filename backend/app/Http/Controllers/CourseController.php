@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use App\Models\Movie;
+use App\Models\Course;
 use App\Models\MovieCategory;
 use Log;
 
-class MovieController extends Controller
+class CourseController extends Controller
 {
     public function index(Request $request)
     {
@@ -34,24 +34,24 @@ class MovieController extends Controller
     {
         $user_id = '';
         if(Auth::guard('admins')->check()){
-            $user_id = Auth::guard('admins')->id();
+            $user = Auth::guard('admins')->user();
         }
 
         $id = $request -> id ?? '';
         if(empty($id)){
-            $movie_data = '';
+            $course_data = '';
         }else{
-            $movie_data = Movie::find($id);
-            if($movie_data){
-                $movie_data -> filepath = Storage::disk('s3') -> url($movie_data -> filepath);
+            $course_data = Course::find($id);
+            if($course_data){
+
             }else{
                 return redirect(route('movie.edit'));
             }
         }
-        \Log::debug('$movie_data: '.print_r($movie_data, true));
+        \Log::debug('$course_data: '.print_r($course_data, true));
         $category_data = MovieCategory::get();
         
-        return view('movieEdit', ['movie_data' => $movie_data, 'category_data' => $category_data, 'user_id' => $user_id]);
+        return view('courseEdit', ['course_data' => $course_data, 'category_data' => $category_data, 'user' => $user]);
     }
 
     public function update(Request $request)
