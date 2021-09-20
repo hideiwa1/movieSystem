@@ -30,6 +30,7 @@ class MovieController extends Controller
 
         return view('movieDetail', ['movie_data' => $movie_data]);
     }
+
     public function edit(Request $request)
     {
         $user_id = '';
@@ -130,5 +131,6 @@ class MovieController extends Controller
 
         return redirect() -> back();
     }
+    
 }
 

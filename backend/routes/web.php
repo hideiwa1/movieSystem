@@ -28,7 +28,7 @@ use App\Http\Controllers\MovieController;
 |
 */
 
-Route::get('/', [CourceController::class, 'index'])
+Route::get('/', [CourseController::class, 'index'])
     ->middleware('auth:trainers,admins')
     ->name('index');
 

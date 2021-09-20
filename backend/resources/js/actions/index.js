@@ -89,3 +89,30 @@ function receiveMovieData(data) {
         data: data
     }
 }
+
+export const SelectMovie = (value, page = 1) => {
+    return dispatch => {
+        dispatch(requestSelectMovie(value));
+
+        return axios
+            .get('/api/movie-list?page=' + page, {params: value})
+            .then((res) => {
+                dispatch(receiveSelectMovie(res.data));
+            })
+            .catch((error)=>{});
+    };
+};
+
+function requestSelectMovie(data) {
+    return {
+        type: "FETCH_SELECTMOVIE_REQUEST",
+        data: data
+    }
+}
+
+function receiveSelectMovie(data) {
+    return {
+        type: "FETCH_SELECTMOVIE_SUCCESS",
+        data: data
+    }
+}

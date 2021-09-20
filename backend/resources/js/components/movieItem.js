@@ -17,16 +17,14 @@ const MovieItem = (props) => {
 
 
     return (
-        <div className="mb-3 border-bottom">
             <div className="row g-0 align-items-stretch p-2">
                 <div className="col-lg-2 d-flex align-items-center">
                     <img src="" alt="" />
-                    <span>{props.value.name}</span>
                 </div>
                 <div class="col-lg-3 d-flex align-items-center">
                     <a href={"movie-detail/" + props.value.id}>
                         <div class="card-body">
-                            <h5 class="card-title">動画タイトル</h5>
+                            <h5 class="card-title">{props.value.name}</h5>
                             <p class="card-text">
                                 <small class="text-muted">詳細</small>
                             </p>
@@ -71,7 +69,6 @@ const MovieItem = (props) => {
                     </div>
                 </div>
             </div>
-        </div>
     )
 };
 

@@ -68,17 +68,17 @@ const StudentList = () => {
 
     return (
         <div>
-            <div class="row g-0 mb-3 p-2">
-            <div class="col-lg-1 d-flex align-items-center">
-                <div class="form-check">
-                    <input id="checkAll" class="form-check-input" type="checkbox" checked={Boolean(values.all)} name="all" onChange={(e)=>{handleAllList(e)}}/>
-                    <input id="" class="" type="hidden" value={values.list} name="list" />
+            <div class="row g-0 border-bottom border-3 mb-3 p-2">
+                <div class="col-lg-1 d-flex align-items-center">
+                    <div class="form-check">
+                        <input id="checkAll" class="form-check-input" type="checkbox" checked={Boolean(values.all)} name="all" onChange={(e)=>{handleAllList(e)}}/>
+                        <input id="" class="" type="hidden" value={values.list} name="list" />
+                    </div>
                 </div>
+                <label class="form-check-label col-lg-4" for="flexCheckDefault">
+                    全て／カテゴリ
+                </label>
             </div>
-            <label class="form-check-label col-lg-4" for="flexCheckDefault">
-                全て／カテゴリ
-            </label>
-        </div>
             {StudentItems}
             <Pagenate activePage={activePage}
 				itemsPerPage={itemsPerPage}

@@ -31,7 +31,9 @@ const MovieList = () => {
     };
 
     const MovieItems = movieData ? movieData.map((val, index) => (
-        <MovieItem value={val} key={index} list={values.list} />
+        <div className="mb-3 border-bottom">
+            <MovieItem value={val} key={index} list={values.list} />
+        </div>
         )) : '';
     
 
