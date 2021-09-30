@@ -9,6 +9,7 @@ use App\Models\StudentClass;
 use App\Models\Sex;
 use App\Models\Trainer;
 use Log;
+use SplFileObject;
 
 class StudentController extends Controller
 {
@@ -191,5 +192,61 @@ class StudentController extends Controller
         }
 
         return $student_data;
+    }
+
+    public function import(Request $request)
+    {
+        \Log::debug('$request');
+        \Log::debug($request);
+        setlocale(LC_ALL, 'ja_JP.UTF-8');
+
+        if($request -> file('csvFile')){
+            $uploadFile = $request -> file('csvFile');
+            $file_path = $request -> file('csvFile') -> path($uploadFile);
+
+            $file = new SplFileObject($file_path);
+            $file->setFlags(SplFileObject::READ_CSV);
+
+            $row_count = 1;
+
+            foreach($file as $row){
+                
+                if ($row === [null]) continue;
+                if ($row_count > 1){
+                    $name = $row[0];
+                    $sex_id = $row[1];
+                    $birthday = $row[2];
+                    $address = $row[3];
+                    $tel = $row[4];
+                    $trainer_id = $row[5];
+                    $class_id = serialize(explode(',',$row[6]));
+                    $email = $row[7];
+                    $status_flg = $row[8];
+                    $comment = $row[9];
+
+                    $array = [
+                        'name' => $name,
+                        'sex_id' => $sex_id,
+                        'birthday' => $birthday,
+                        'address' => $address,
+                        'tel' => $tel,
+                        'trainer_id' => $trainer_id,
+                        'class_id' => $class_id,
+                        'email' => $email,
+                        'comment' => $comment,
+                        'status_flg' => $status_flg,
+                    ];
+                    \Log::debug($array);
+                    $student = new Student;
+
+                    $student -> fill($array);
+                    $student -> save();
+                }
+                $row_count++;
+            }
+
+        }
+        
+        return redirect(route('student.list'));
     }
 }

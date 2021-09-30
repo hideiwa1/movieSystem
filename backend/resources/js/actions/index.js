@@ -8,6 +8,15 @@ export const FETCH_STUDENT_SUCCESS = "FETCH_STUDENT_SUCCESS";
 export const FETCH_MOVIE_REQUEST = "FETCH_MOVIE_REQUEST";
 export const FETCH_MOVIE_SUCCESS = "FETCH_MOVIE_SUCCESS";
 
+export const FETCH_COURSE_REQUEST = "FETCH_COURSE_REQUEST";
+export const FETCH_COURSE_SUCCESS = "FETCH_COURSE_SUCCESS";
+
+export const FETCH_COURSELIST_REQUEST = "FETCH_COURSELIST_REQUEST";
+export const FETCH_COURSELIST_SUCCESS = "FETCH_COURSELIST_SUCCESS";
+
+export const FETCH_MAILLIST_REQUEST = "FETCH_MAILLIST_REQUEST";
+export const FETCH_MAILLIST_SUCCESS = "FETCH_MAILLIST_SUCCESS";
+
 export const SerchTrainer = (value, page = 1) => {
     return dispatch => {
         dispatch(requestTrainerData(value));
@@ -70,6 +79,7 @@ export const SerchMovie = (value, page = 1) => {
         return axios
             .get('/api/movie-list?page=' + page, {params: value})
             .then((res) => {
+                console.log(res);
                 dispatch(receiveMovieData(res.data));
             })
             .catch((error)=>{});
@@ -90,29 +100,104 @@ function receiveMovieData(data) {
     }
 }
 
-export const SelectMovie = (value, page = 1) => {
+export const SelectMovie = (data) => {
+    return {
+        type: "FETCH_SELECTMOVIE",
+        data: data
+    };
+};
+
+export const CourseData = (value) => {
     return dispatch => {
-        dispatch(requestSelectMovie(value));
+        dispatch(requestCourseData(value));
 
         return axios
-            .get('/api/movie-list?page=' + page, {params: value})
+            .get('/course-data', {withCredentials: true, params: {
+                 id:value,
+                }
+            })
             .then((res) => {
-                dispatch(receiveSelectMovie(res.data));
+                console.log('courseData');
+                console.log(res.data);
+                dispatch(receiveCourseData(res.data));
             })
             .catch((error)=>{});
     };
 };
 
-function requestSelectMovie(data) {
+function requestCourseData(data) {
     return {
-        type: "FETCH_SELECTMOVIE_REQUEST",
+        type: "FETCH_COURSE_REQUEST",
         data: data
     }
 }
 
-function receiveSelectMovie(data) {
+function receiveCourseData(data) {
     return {
-        type: "FETCH_SELECTMOVIE_SUCCESS",
+        type: "FETCH_COURSE_SUCCESS",
+        data: data
+    }
+}
+
+export const changeCourseData = (data) => {
+    return {
+        type: "CHANGE_COURSE_DATA",
+        data: data
+    };
+};
+
+export const SerchCourse = (value, page = 1) => {
+    return dispatch => {
+        dispatch(requestCourseListData(value));
+
+        return axios
+            .get('/api/course-list?page=' + page, {params: value})
+            .then((res) => {
+                console.log(res);
+                dispatch(receiveCourseListData(res.data));
+            })
+            .catch((error)=>{});
+    };
+};
+
+function requestCourseListData(data) {
+    return {
+        type: "FETCH_COURSELIST_REQUEST",
+        data: data
+    }
+}
+
+function receiveCourseListData(data) {
+    return {
+        type: "FETCH_COURSELIST_SUCCESS",
+        data: data
+    }
+}
+
+export const SerchMailList = (value, page = 1) => {
+    return dispatch => {
+        dispatch(requestMailListData(value));
+
+        return axios
+            .get('/api/mail-list?page=' + page, {params: value})
+            .then((res) => {
+                //console.log(res);
+                dispatch(receiveMailListData(res.data));
+            })
+            .catch((error)=>{});
+    };
+};
+
+function requestMailListData(data) {
+    return {
+        type: "FETCH_MAILLIST_REQUEST",
+        data: data
+    }
+}
+
+function receiveMailListData(data) {
+    return {
+        type: "FETCH_MAILLIST_SUCCESS",
         data: data
     }
 }

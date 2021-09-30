@@ -21,8 +21,9 @@ const MovieList = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        
-            dispatch(SerchMovie(''));
+        let params = (new URL(document.location)).searchParams;
+        let category_id = params.get('category_id');
+        dispatch(SerchMovie({'category_id': category_id}));
         
     }, []);
 

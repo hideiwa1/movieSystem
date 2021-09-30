@@ -1,5 +1,8 @@
 <x-app-layout>
-
+    <x-breadcrumb>
+        <li class="breadcrumb-item"><a href="{{ route('trainer.list') }}">トレーナー一覧</a></li>
+        <li class="breadcrumb-item active" aria-current="page">トレーナー詳細</li>
+    </x-breadcrumb>
     <x-content>
 
         <x-slot name="subtitle">

@@ -1,5 +1,8 @@
 <x-app-layout>
-
+    <x-breadcrumb>
+        <li class="breadcrumb-item"><a href="{{ route('student.list') }}">生徒一覧</a></li>
+        <li class="breadcrumb-item active" aria-current="page">生徒情報　編集</li>
+    </x-breadcrumb>
     <x-content>
 
         <x-slot name="subtitle">
@@ -15,13 +18,13 @@
         <x-slot name="left">
             <!-- name -->
             <div class="mb-3">
-                <x-label-block for="name" :value="__('name')" />
+                <x-label-block for="name" :value="__('名前')" />
                 <x-input-block id="name" class="block mt-1 w-full" type="text" name="name" :value="$student_data -> name ?? old('name')" />
             </div>
 
             <!-- sex -->
             <div class="mb-3">
-                <x-label-block for="sex" :value="__('sex')" />
+                <x-label-block for="sex" :value="__('性別')" />
                 <div class="mb-3">
                 @foreach($sex_data as $key => $val)
                     <div class="form-check form-check-inline">
@@ -34,19 +37,19 @@
 
             <!-- birthday -->
             <div class="mb-3">
-                <x-label-block for="birthday" :value="__('birthday')" />
+                <x-label-block for="birthday" :value="__('生年月日')" />
                 <x-input-block id="birthday" class="block mt-1 w-full" type="date" name="birthday" :value="$student_data -> birthday ?? old('birthday')" />
             </div>
 
             <!-- address -->
             <div class="mb-3">
-                <x-label-block for="address" :value="__('address')" />
+                <x-label-block for="address" :value="__('住所')" />
                 <x-input-block id="address" class="block mt-1 w-full" type="text" name="address" :value="$student_data -> address ?? old('address')" />
             </div>
 
             <!-- tel -->
             <div class="mb-3">
-                <x-label-block for="tel" :value="__('tel')" />
+                <x-label-block for="tel" :value="__('電話番号')" />
                 <x-input-block id="tel" class="block mt-1 w-full" type="text" name="tel" :value="$student_data -> tel ?? old('tel')" />
             </div>
 
@@ -82,13 +85,13 @@
         <x-slot name="right">
             <!-- email -->
             <div class="mb-3">
-                <x-label-block for="email" :value="__('email')" />
+                <x-label-block for="email" :value="__('メールアドレス')" />
                 <x-input-block id="email" class="block mt-1 w-full" type="text" name="email" :value="$student_data -> email ?? old('email')" />
             </div>
 
             <!-- status -->
             <div class="mb-3">
-                <x-label-block for="status_flg" :value="__('status')" />
+                <x-label-block for="status_flg" :value="__('参加フラグ')" />
                 <div class="mb-3">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="status_flg" value="1" {{ (old('status_flg') == '1' ? 'checked': ($student_data ? ($student_data -> status_flg == '1') : '' )) ? 'checked': ''}}>

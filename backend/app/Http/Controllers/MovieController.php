@@ -86,20 +86,26 @@ class MovieController extends Controller
     public function List(Request $request)
     {
         $movie_data = Movie::get();
+
+        foreach($movie_data as $key => $val){
+            if($val -> filepath){
+                $val -> filepath = Storage::disk('s3') -> url($val -> filepath);
+            }
+        }
         
         return view('movieList', ['movie_data' => $movie_data]);
     }
 
     public function Search(Request $request)
     {
-        \Log::debug('$request: '.$request -> club);
+        \Log::debug($request);
 
         $sql = [];
         
         $keyword = $request -> keyword;
-        $category_id = $request -> category;
+        $category_id = $request -> category_id;
         if($request -> status_on == 'true' && $request -> status_off == 'true'){
-            $status_flg = '';
+            $open_flg = '';
         }elseif($request -> status_on == 'true'){
             $open_flg = 1;
         }elseif($request -> status_off == 'true'){
@@ -111,11 +117,30 @@ class MovieController extends Controller
         $keyword && $sql[] = ['name', 'LIKE', '%'.$keyword.'%'];
         $category_id && $sql[] = ['category_id', '=', $category_id];
         $open_flg && $sql[] = ['open_flg', '=', $open_flg];
+
+        \Log::debug($sql);
+
         $movie_data = Movie::where($sql)
             -> paginate(10);
+        foreach($movie_data as $key => $val){
+            if($val -> filepath){
+                $val -> filepath = Storage::disk('s3') -> url($val -> filepath);
+            }
+        }
         
+        $movie_all_data = Movie::where($sql)
+            -> get();
+        foreach($movie_all_data as $key => $val){
+            if($val -> filepath){
+                $val -> filepath = Storage::disk('s3') -> url($val -> filepath);
+            }
+        }
 
-        return $movie_data;
+        $data = [];
+        $data['movie_data'] = $movie_data;
+        $data['movie_all'] = $movie_all_data;
+
+        return $data;
     }
 
 

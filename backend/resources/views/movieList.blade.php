@@ -1,5 +1,7 @@
 <x-app-layout>
-
+    <x-breadcrumb>
+        <li class="breadcrumb-item active" aria-current="page">動画一覧</li>
+    </x-breadcrumb>
     <x-content>
 
     <x-slot name="submenu">

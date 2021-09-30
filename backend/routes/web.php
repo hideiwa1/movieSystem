@@ -15,6 +15,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\AuthController;
 
 
 /*
@@ -31,6 +32,8 @@ use App\Http\Controllers\MovieController;
 Route::get('/', [CourseController::class, 'index'])
     ->middleware('auth:trainers,admins')
     ->name('index');
+
+Route::get('/auth-data', [AuthController::class, 'search']);
 
 Route::middleware('auth:trainers')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -122,6 +125,10 @@ Route::get('/student-list', [StudentController::class, 'list'])
     ->middleware('auth:trainers,admins')
     ->name('student.list');
 
+Route::post('/student-import', [StudentController::class, 'import'])
+    ->middleware('auth:trainers,admins')
+    ->name('student.import');
+
 Route::get('/mail', [MailController::class, 'show'])
     ->middleware('auth:trainers,admins')
     ->name('mail.show');
@@ -161,3 +168,14 @@ Route::get('/course-edit/{id?}', [CourseController::class, 'edit'])
 Route::post('/course-edit', [CourseController::class, 'update'])
     ->middleware('auth:trainers,admins')
     ->name('course.update');
+
+Route::post('/course-delete/{id}', [CourseController::class, 'delete'])
+    ->middleware('auth:trainers,admins')
+    ->name('course.delete');
+
+Route::get('/course-detail/{id}', [CourseController::class, 'show'])
+    ->middleware('auth:trainers,admins')
+    ->name('course.detail');
+
+Route::get('/course-data', [CourseController::class, 'editData']);
+

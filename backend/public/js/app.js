@@ -6936,10 +6936,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "FETCH_STUDENT_SUCCESS": () => (/* binding */ FETCH_STUDENT_SUCCESS),
 /* harmony export */   "FETCH_MOVIE_REQUEST": () => (/* binding */ FETCH_MOVIE_REQUEST),
 /* harmony export */   "FETCH_MOVIE_SUCCESS": () => (/* binding */ FETCH_MOVIE_SUCCESS),
+/* harmony export */   "FETCH_COURSE_REQUEST": () => (/* binding */ FETCH_COURSE_REQUEST),
+/* harmony export */   "FETCH_COURSE_SUCCESS": () => (/* binding */ FETCH_COURSE_SUCCESS),
+/* harmony export */   "FETCH_COURSELIST_REQUEST": () => (/* binding */ FETCH_COURSELIST_REQUEST),
+/* harmony export */   "FETCH_COURSELIST_SUCCESS": () => (/* binding */ FETCH_COURSELIST_SUCCESS),
+/* harmony export */   "FETCH_MAILLIST_REQUEST": () => (/* binding */ FETCH_MAILLIST_REQUEST),
+/* harmony export */   "FETCH_MAILLIST_SUCCESS": () => (/* binding */ FETCH_MAILLIST_SUCCESS),
 /* harmony export */   "SerchTrainer": () => (/* binding */ SerchTrainer),
 /* harmony export */   "SerchStudent": () => (/* binding */ SerchStudent),
 /* harmony export */   "SerchMovie": () => (/* binding */ SerchMovie),
-/* harmony export */   "SelectMovie": () => (/* binding */ SelectMovie)
+/* harmony export */   "SelectMovie": () => (/* binding */ SelectMovie),
+/* harmony export */   "CourseData": () => (/* binding */ CourseData),
+/* harmony export */   "changeCourseData": () => (/* binding */ changeCourseData),
+/* harmony export */   "SerchCourse": () => (/* binding */ SerchCourse),
+/* harmony export */   "SerchMailList": () => (/* binding */ SerchMailList)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -6950,6 +6960,12 @@ var FETCH_STUDENT_REQUEST = "FETCH_STUDENT_REQUEST";
 var FETCH_STUDENT_SUCCESS = "FETCH_STUDENT_SUCCESS";
 var FETCH_MOVIE_REQUEST = "FETCH_MOVIE_REQUEST";
 var FETCH_MOVIE_SUCCESS = "FETCH_MOVIE_SUCCESS";
+var FETCH_COURSE_REQUEST = "FETCH_COURSE_REQUEST";
+var FETCH_COURSE_SUCCESS = "FETCH_COURSE_SUCCESS";
+var FETCH_COURSELIST_REQUEST = "FETCH_COURSELIST_REQUEST";
+var FETCH_COURSELIST_SUCCESS = "FETCH_COURSELIST_SUCCESS";
+var FETCH_MAILLIST_REQUEST = "FETCH_MAILLIST_REQUEST";
+var FETCH_MAILLIST_SUCCESS = "FETCH_MAILLIST_SUCCESS";
 var SerchTrainer = function SerchTrainer(value) {
   var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
   return function (dispatch) {
@@ -7009,6 +7025,7 @@ var SerchMovie = function SerchMovie(value) {
     return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/movie-list?page=' + page, {
       params: value
     }).then(function (res) {
+      console.log(res);
       dispatch(receiveMovieData(res.data));
     })["catch"](function (error) {});
   };
@@ -7028,28 +7045,98 @@ function receiveMovieData(data) {
   };
 }
 
-var SelectMovie = function SelectMovie(value) {
-  var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+var SelectMovie = function SelectMovie(data) {
+  return {
+    type: "FETCH_SELECTMOVIE",
+    data: data
+  };
+};
+var CourseData = function CourseData(value) {
   return function (dispatch) {
-    dispatch(requestSelectMovie(value));
-    return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/movie-list?page=' + page, {
-      params: value
+    dispatch(requestCourseData(value));
+    return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/course-data', {
+      withCredentials: true,
+      params: {
+        id: value
+      }
     }).then(function (res) {
-      dispatch(receiveSelectMovie(res.data));
+      console.log('courseData');
+      console.log(res.data);
+      dispatch(receiveCourseData(res.data));
     })["catch"](function (error) {});
   };
 };
 
-function requestSelectMovie(data) {
+function requestCourseData(data) {
   return {
-    type: "FETCH_SELECTMOVIE_REQUEST",
+    type: "FETCH_COURSE_REQUEST",
     data: data
   };
 }
 
-function receiveSelectMovie(data) {
+function receiveCourseData(data) {
   return {
-    type: "FETCH_SELECTMOVIE_SUCCESS",
+    type: "FETCH_COURSE_SUCCESS",
+    data: data
+  };
+}
+
+var changeCourseData = function changeCourseData(data) {
+  return {
+    type: "CHANGE_COURSE_DATA",
+    data: data
+  };
+};
+var SerchCourse = function SerchCourse(value) {
+  var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  return function (dispatch) {
+    dispatch(requestCourseListData(value));
+    return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/course-list?page=' + page, {
+      params: value
+    }).then(function (res) {
+      console.log(res);
+      dispatch(receiveCourseListData(res.data));
+    })["catch"](function (error) {});
+  };
+};
+
+function requestCourseListData(data) {
+  return {
+    type: "FETCH_COURSELIST_REQUEST",
+    data: data
+  };
+}
+
+function receiveCourseListData(data) {
+  return {
+    type: "FETCH_COURSELIST_SUCCESS",
+    data: data
+  };
+}
+
+var SerchMailList = function SerchMailList(value) {
+  var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  return function (dispatch) {
+    dispatch(requestMailListData(value));
+    return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/mail-list?page=' + page, {
+      params: value
+    }).then(function (res) {
+      //console.log(res);
+      dispatch(receiveMailListData(res.data));
+    })["catch"](function (error) {});
+  };
+};
+
+function requestMailListData(data) {
+  return {
+    type: "FETCH_MAILLIST_REQUEST",
+    data: data
+  };
+}
+
+function receiveMailListData(data) {
+  return {
+    type: "FETCH_MAILLIST_SUCCESS",
     data: data
   };
 }
@@ -7066,7 +7153,7 @@ function receiveSelectMovie(data) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./reducers */ "./resources/js/reducers/index.js");
 /* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
@@ -7079,8 +7166,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_movieSerch__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/movieSerch */ "./resources/js/components/movieSerch.js");
 /* harmony import */ var _components_movieList__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/movieList */ "./resources/js/components/movieList.js");
 /* harmony import */ var _components_courseEdit__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/courseEdit */ "./resources/js/components/courseEdit.js");
-/* harmony import */ var _components_Example__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _components_courseSerch__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/courseSerch */ "./resources/js/components/courseSerch.js");
+/* harmony import */ var _components_courseList__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/courseList */ "./resources/js/components/courseList.js");
+/* harmony import */ var _components_mailList__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/mailList */ "./resources/js/components/mailList.js");
+/* harmony import */ var _components_mailListCSV__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/mailListCSV */ "./resources/js/components/mailListCSV.js");
+/* harmony import */ var _components_mailListDetailCSV__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/mailListDetailCSV */ "./resources/js/components/mailListDetailCSV.js");
+/* harmony import */ var _components_Example__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
@@ -7102,77 +7194,117 @@ __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
 
 
 
+
+
+
+
+
 var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-var store = (0,redux__WEBPACK_IMPORTED_MODULE_16__.createStore)(_reducers__WEBPACK_IMPORTED_MODULE_3__.default, composeEnhancers((0,redux__WEBPACK_IMPORTED_MODULE_16__.applyMiddleware)(redux_thunk__WEBPACK_IMPORTED_MODULE_4__.default)));
+var store = (0,redux__WEBPACK_IMPORTED_MODULE_21__.createStore)(_reducers__WEBPACK_IMPORTED_MODULE_3__.default, composeEnhancers((0,redux__WEBPACK_IMPORTED_MODULE_21__.applyMiddleware)(redux_thunk__WEBPACK_IMPORTED_MODULE_4__.default)));
 
 if (document.getElementById('Example')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
     store: store,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_components_Example__WEBPACK_IMPORTED_MODULE_14__.default, {})
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_components_Example__WEBPACK_IMPORTED_MODULE_19__.default, {})
   }), document.getElementById('Example'));
 }
 
 if (document.getElementById('TrainerSerch')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
     store: store,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_components_trainerSerch__WEBPACK_IMPORTED_MODULE_5__.default, {})
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_components_trainerSerch__WEBPACK_IMPORTED_MODULE_5__.default, {})
   }), document.getElementById('TrainerSerch'));
 }
 
 if (document.getElementById('TrainerList')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
     store: store,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_components_trainerList__WEBPACK_IMPORTED_MODULE_6__.default, {})
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_components_trainerList__WEBPACK_IMPORTED_MODULE_6__.default, {})
   }), document.getElementById('TrainerList'));
 }
 
 if (document.getElementById('TrainerCSV')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
     store: store,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_components_trainerCSV__WEBPACK_IMPORTED_MODULE_7__.default, {})
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_components_trainerCSV__WEBPACK_IMPORTED_MODULE_7__.default, {})
   }), document.getElementById('TrainerCSV'));
 }
 
 if (document.getElementById('StudentSerch')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
     store: store,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_components_studentSerch__WEBPACK_IMPORTED_MODULE_8__.default, {})
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_components_studentSerch__WEBPACK_IMPORTED_MODULE_8__.default, {})
   }), document.getElementById('StudentSerch'));
 }
 
 if (document.getElementById('StudentList')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
     store: store,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_components_studentList__WEBPACK_IMPORTED_MODULE_9__.default, {})
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_components_studentList__WEBPACK_IMPORTED_MODULE_9__.default, {})
   }), document.getElementById('StudentList'));
 }
 
 if (document.getElementById('StudentCSV')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
     store: store,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_components_studentCSV__WEBPACK_IMPORTED_MODULE_10__.default, {})
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_components_studentCSV__WEBPACK_IMPORTED_MODULE_10__.default, {})
   }), document.getElementById('StudentCSV'));
 }
 
 if (document.getElementById('MovieSerch')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
     store: store,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_components_movieSerch__WEBPACK_IMPORTED_MODULE_11__.default, {})
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_components_movieSerch__WEBPACK_IMPORTED_MODULE_11__.default, {})
   }), document.getElementById('MovieSerch'));
 }
 
 if (document.getElementById('MovieList')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
     store: store,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_components_movieList__WEBPACK_IMPORTED_MODULE_12__.default, {})
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_components_movieList__WEBPACK_IMPORTED_MODULE_12__.default, {})
   }), document.getElementById('MovieList'));
 }
 
 if (document.getElementById('CourseEdit')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
     store: store,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_components_courseEdit__WEBPACK_IMPORTED_MODULE_13__.default, {})
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_components_courseEdit__WEBPACK_IMPORTED_MODULE_13__.default, {})
   }), document.getElementById('CourseEdit'));
+}
+
+if (document.getElementById('CourseSerch')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+    store: store,
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_components_courseSerch__WEBPACK_IMPORTED_MODULE_14__.default, {})
+  }), document.getElementById('CourseSerch'));
+}
+
+if (document.getElementById('CourseList')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+    store: store,
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_components_courseList__WEBPACK_IMPORTED_MODULE_15__.default, {})
+  }), document.getElementById('CourseList'));
+}
+
+if (document.getElementById('MailList')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+    store: store,
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_components_mailList__WEBPACK_IMPORTED_MODULE_16__.default, {})
+  }), document.getElementById('MailList'));
+}
+
+if (document.getElementById('MailListCSV')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+    store: store,
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_components_mailListCSV__WEBPACK_IMPORTED_MODULE_17__.default, {})
+  }), document.getElementById('MailListCSV'));
+}
+
+if (document.getElementById('MailListDetailCSV')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+    store: store,
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_components_mailListDetailCSV__WEBPACK_IMPORTED_MODULE_18__.default, {})
+  }), document.getElementById('MailListDetailCSV'));
 }
 
 /***/ }),
@@ -7316,9 +7448,7 @@ var CourseEdit = function CourseEdit() {
       totalItemCount = _useSelector.totalItemCount;
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    pageRange: 5,
-    list: [],
-    all: false
+    course_id: window.location.pathname.replace('/course-edit/', '')
   }),
       _useState2 = _slicedToArray(_useState, 2),
       values = _useState2[0],
@@ -7327,6 +7457,7 @@ var CourseEdit = function CourseEdit() {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_4__.SerchMovie)(''));
+    dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_4__.CourseData)(window.location.pathname.replace('/course-edit/', '')));
   }, []);
 
   var handlePageChange = function handlePageChange(num) {
@@ -7342,19 +7473,16 @@ var CourseEdit = function CourseEdit() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.BrowserRouter, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Switch, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
           path: "/movie-select",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_movieSelect__WEBPACK_IMPORTED_MODULE_8__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
-            to: "/course-edit",
-            children: "Home"
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_movieSelect__WEBPACK_IMPORTED_MODULE_8__.default, {
+            id: values.course_id
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
           path: "/course-edit",
-          exact: true,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_courseEditForm__WEBPACK_IMPORTED_MODULE_7__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
-            to: "/movie-select",
-            children: "movie-select"
-          })]
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_courseEditForm__WEBPACK_IMPORTED_MODULE_7__.default, {
+            id: values.course_id
+          })
         })]
       })
     })
@@ -7394,7 +7522,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pagenate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pagenate */ "./resources/js/components/pagenate.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -7421,18 +7556,21 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var CourseEditForm = function CourseEditForm() {
+
+var CourseEditForm = function CourseEditForm(props) {
   var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(selector),
       movieData = _useSelector.movieData,
+      userData = _useSelector.userData,
+      courseEditData = _useSelector.courseEditData,
+      itemData = _useSelector.itemData,
       search = _useSelector.search,
       activePage = _useSelector.activePage,
       itemsPerPage = _useSelector.itemsPerPage,
       totalItemCount = _useSelector.totalItemCount;
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    pageRange: 5,
-    list: [],
-    all: false
+    name: '',
+    comment: ''
   }),
       _useState2 = _slicedToArray(_useState, 2),
       values = _useState2[0],
@@ -7440,27 +7578,264 @@ var CourseEditForm = function CourseEditForm() {
 
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_4__.SerchMovie)(''));
+    dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_4__.SelectMovie)(itemData));
   }, []);
 
-  var handlePageChange = function handlePageChange(num) {
-    dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_4__.SerchMovie)(search, num));
+  var handleChange = function handleChange(e) {
+    var val = e.target.value;
+    var name = e.target.name;
+    dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_4__.changeCourseData)(_objectSpread(_objectSpread({}, courseEditData), {}, _defineProperty({}, name, val))));
   };
 
-  var MovieItems = movieData ? movieData.map(function (val, index) {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_movieItem__WEBPACK_IMPORTED_MODULE_3__.default, {
-      value: val,
-      list: values.list
+  var handleDeleteItem = function handleDeleteItem(e) {
+    e.preventDefault();
+    var val = Number(e.target.dataset.index);
+    console.log(val);
+    var newList = itemData.filter(function (value, index) {
+      return index !== val;
+    });
+    console.log(newList);
+    dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_4__.SelectMovie)(newList));
+  };
+
+  var csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    document.querySelectorAll('.drag-list').forEach(function (elm) {
+      elm.ondragstart = function (event) {
+        event.dataTransfer.setData('text/plain', event.target.id);
+      };
+
+      elm.ondragover = function (event) {
+        event.preventDefault();
+        this.style.borderTop = '2px solid blue';
+      };
+
+      elm.ondragleave = function (event) {
+        this.style.borderTop = '';
+      };
+
+      elm.ondrop = function (event) {
+        event.preventDefault();
+        var id = event.dataTransfer.getData('text/plain'); //let elm_drag = document.getElementById(id);
+        //this.parentNode.insertBefore(elm_drag, this);
+
+        this.style.borderTop = '';
+        var newList = itemData.filter(function (val) {
+          return val;
+        });
+        var oldIndex = Number(id.replace('list-', ''));
+        var toIndex = Number(this.id.replace('list-', ''));
+        var moveData = newList[oldIndex];
+
+        if (oldIndex > toIndex) {
+          newList.splice(oldIndex, 1);
+          newList.splice(toIndex, 0, moveData);
+        } else {
+          newList.splice(toIndex, 0, moveData);
+          newList.splice(oldIndex, 1);
+        }
+
+        dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_4__.SelectMovie)(newList));
+      };
+    });
+  }, [itemData]);
+  var SelectedItems = itemData ? itemData.map(function (val, index) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      "class": "mb-3 border-bottom drag-list",
+      id: "list-" + index,
+      draggable: "true",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        "class": "row g-0 align-items-stretch p-2",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+          "class": "col-lg-2 d-flex align-items-center justify-content-between",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+            children: index
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
+            type: "hidden",
+            name: "movie_id[]",
+            value: val.id
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("video", {
+            src: val.filepath,
+            preload: "metadata",
+            alt: "",
+            "class": "border flex-grow-1 w-100"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+          "class": "col-lg-2",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+            "class": "card-body",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h5", {
+              "class": "card-title",
+              children: val.name
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+              "class": "card-text",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("a", {
+                href: "/movie-detail/" + val.id,
+                target: "_blank",
+                children: "\u8A73\u7D30"
+              })
+            })]
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+          "class": "col-lg-7 d-flex align-items-center",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+            "class": "row g-0 flex-grow-1 text-center justify-content-between",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("a", {
+              href: "/movie-edit/" + val.id,
+              target: "_blank",
+              "class": "col-lg-3 btn btn-secondary m-2",
+              children: "\u7DE8\u96C6"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+              "class": "col-lg-3 btn btn-secondary m-2",
+              children: "\u516C\u958B\uFF0F\u975E\u516C\u958B"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+              "class": "col-lg-4 btn btn-secondary fs-6 m-2",
+              "data-bs-toggle": "modal",
+              "data-bs-target": "#deleteModal" + index,
+              children: "\u30EA\u30B9\u30C8\u304B\u3089\u524A\u9664"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+              "class": "modal fade",
+              id: "deleteModal" + index,
+              tabindex: "-1",
+              "aria-labelledby": "deleteModalLabel",
+              "aria-hidden": "true",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                "class": "modal-dialog",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                  "class": "modal-content",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                    "class": "modal-header",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+                      type: "button",
+                      "class": "btn-close",
+                      "data-bs-dismiss": "modal",
+                      "aria-label": "Close"
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                    "class": "modal-body",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                      id: "deleteform",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("p", {
+                        children: ["\u3053\u306E\u52D5\u753B\u3092\u30EA\u30B9\u30C8\u304B\u3089\u524A\u9664\u3057\u307E\u3059\u3002", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("br", {}), "\u3088\u308D\u3057\u3044\u3067\u3059\u304B\uFF1F"]
+                      })
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                    "class": "modal-footer",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+                      type: "button",
+                      "class": "btn btn-secondary",
+                      "data-bs-dismiss": "modal",
+                      "data-bs-target": "#deleteModal" + index,
+                      children: "\u9589\u3058\u308B"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+                      type: "button",
+                      "class": "btn btn-primary col-lg-4",
+                      "data-bs-dismiss": "modal",
+                      "data-bs-target": "#deleteModal" + index,
+                      onClick: function onClick(e) {
+                        handleDeleteItem(e);
+                      },
+                      "data-index": index,
+                      children: "\u524A\u9664\u3059\u308B"
+                    })]
+                  })]
+                })
+              })
+            })]
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+          "class": "col-lg-1  d-flex align-items-center justify-content-around d-none d-lg-flex",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+            "class": "btn-trigger",
+            id: "btn01",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {})]
+          })
+        })]
+      })
     }, index);
+  }) : '';
+  var UserName = courseEditData ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+    "class": "col-lg-8",
+    children: [courseEditData.auter_name ? courseEditData.auter_name : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
+      type: "hidden",
+      name: courseEditData.admin_id ? 'admin_id' : 'trainer_id',
+      value: courseEditData.admin_id ? courseEditData.admin_id : courseEditData.trainer_id ? courseEditData.trainer_id : ''
+    })]
+  }) : userData ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+    "class": "col-lg-8",
+    children: [userData.admin ? userData.admin.name : userData.trainer ? userData.trainer.name : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
+      type: "hidden",
+      name: userData.admin ? 'admin_id' : 'trainer_id',
+      value: userData.admin ? userData.admin.id : userData.trainer ? userData.trainer.id : ''
+    })]
+  }) : '';
+  var DeleteButton = courseEditData ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+      type: "button",
+      form: "deleteForm",
+      "class": "btn btn-secondary col-lg-4 m-3",
+      "data-bs-toggle": "modal",
+      "data-bs-target": "#courseDeleteModal",
+      children: "\u524A\u9664\u3059\u308B"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      "class": "modal fade",
+      id: "courseDeleteModal",
+      tabindex: "-1",
+      "aria-labelledby": "deleteModalLabel",
+      "aria-hidden": "true",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        "class": "modal-dialog",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+          "class": "modal-content",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            "class": "modal-header",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+              type: "button",
+              "class": "btn-close",
+              "data-bs-dismiss": "modal",
+              "aria-label": "Close"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            "class": "modal-body",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+              id: "deleteform",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("p", {
+                children: ["\u3053\u306E\u30B3\u30F3\u30C6\u30F3\u30C4\u3092\u524A\u9664\u3057\u307E\u3059\u3002", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("br", {}), "\u3088\u308D\u3057\u3044\u3067\u3059\u304B\uFF1F"]
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+            "class": "modal-footer",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+              type: "button",
+              "class": "btn btn-secondary",
+              "data-bs-dismiss": "modal",
+              "data-bs-target": "courseDeleteModal",
+              children: "\u9589\u3058\u308B"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+              type: "submit",
+              form: "deleteForm",
+              "class": "btn btn-primary col-lg-4",
+              "data-bs-dismiss": "modal",
+              "data-bs-target": "courseDeleteModal",
+              children: "\u524A\u9664\u3059\u308B"
+            })]
+          })]
+        })
+      })
+    })]
   }) : '';
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("form", {
     method: "POST",
-    action: "",
+    action: "/course-edit",
     "class": "form",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
       type: "hidden",
+      name: "_token",
+      value: csrf
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
+      type: "hidden",
       name: "id",
-      value: ""
+      value: courseEditData ? courseEditData.id : ''
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
       "class": "row g-0 mb-3 p-sm-3",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("label", {
@@ -7472,7 +7847,11 @@ var CourseEditForm = function CourseEditForm() {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
           type: "text",
           "class": "form-control",
-          name: "name"
+          name: "name",
+          onChange: function onChange(e) {
+            handleChange(e);
+          },
+          value: courseEditData ? courseEditData.name : ''
         })
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
@@ -7481,9 +7860,7 @@ var CourseEditForm = function CourseEditForm() {
         "for": "",
         "class": "col-lg-4 col-form-label",
         children: "\u4F5C\u6210\u8005"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-        "class": "col-lg-8"
-      })]
+      }), UserName]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
       "class": "row g-0 mb-3 p-sm-3",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("label", {
@@ -7496,7 +7873,11 @@ var CourseEditForm = function CourseEditForm() {
           name: "comment",
           id: "",
           rows: "5",
-          "class": "form-control"
+          "class": "form-control",
+          onChange: function onChange(e) {
+            handleChange(e);
+          },
+          value: courseEditData ? courseEditData.comment : ''
         })
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
@@ -7511,6 +7892,10 @@ var CourseEditForm = function CourseEditForm() {
           "class": "form-select",
           name: "open_flg",
           "aria-label": "Default select example",
+          onChange: function onChange(e) {
+            handleChange(e);
+          },
+          value: courseEditData ? courseEditData.open_flg : '',
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
             value: "1",
             children: "\u516C\u958B"
@@ -7531,7 +7916,11 @@ var CourseEditForm = function CourseEditForm() {
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
           type: "date",
           name: "start_at",
-          "class": "form-control w-100"
+          "class": "form-control w-100",
+          onChange: function onChange(e) {
+            handleChange(e);
+          },
+          value: courseEditData ? courseEditData.start_at.replace(' 00:00:00', '') : ''
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         "class": "col-lg-5 mb-3",
@@ -7542,7 +7931,11 @@ var CourseEditForm = function CourseEditForm() {
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
           type: "date",
           name: "end_at",
-          "class": "form-control w-100"
+          "class": "form-control w-100",
+          onChange: function onChange(e) {
+            handleChange(e);
+          },
+          value: courseEditData ? courseEditData.end_at.replace(' 00:00:00', '') : ''
         })]
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
@@ -7551,183 +7944,16 @@ var CourseEditForm = function CourseEditForm() {
         "for": "",
         "class": "col-lg-4 col-form-label",
         children: "\u30B3\u30FC\u30B9\u30E1\u30CB\u30E5\u30FC"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("a", {
-        href: "movieSelect.html",
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+        to: "/movie-select/" + props.id,
         "class": "col-lg-4 btn btn-secondary d-block m-2",
         children: "\u52D5\u753B\u3092\u9078\u629E"
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-      "class": "mb-3 border-bottom drag-list",
-      id: "list-1",
-      draggable: "true",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-        "class": "row g-0 align-items-stretch p-2",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-          "class": "col-lg-2 d-flex align-items-center justify-content-between",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-            children: "1"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
-            src: "",
-            alt: "",
-            "class": "border flex-grow-1 m-2 h-100"
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          "class": "col-lg-2",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            "class": "card-body",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h5", {
-              "class": "card-title",
-              children: "\u52D5\u753B\u30BF\u30A4\u30C8\u30EB"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
-              "class": "card-text",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("small", {
-                "class": "text-muted",
-                children: "\u8A73\u7D30"
-              })
-            })]
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          "class": "col-lg-7 d-flex align-items-center",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            "class": "row g-0 flex-grow-1 text-center justify-content-between",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("a", {
-              href: "movieEdit.html",
-              "class": "col-lg-3 btn btn-secondary m-2",
-              children: "\u7DE8\u96C6"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-              "class": "col-lg-3 btn btn-secondary m-2",
-              children: "\u516C\u958B\uFF0F\u975E\u516C\u958B"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-              "class": "col-lg-4 btn btn-secondary fs-6 m-2",
-              children: "\u30EA\u30B9\u30C8\u304B\u3089\u524A\u9664"
-            })]
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          "class": "col-lg-1  d-flex align-items-center justify-content-around d-none d-lg-flex",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            "class": "btn-trigger",
-            id: "btn01",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {})]
-          })
-        })]
-      })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-      "class": "mb-3 border-bottom drag-list",
-      id: "list-1",
-      draggable: "true",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-        "class": "row g-0 align-items-stretch p-2",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-          "class": "col-lg-2 d-flex align-items-center justify-content-between",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-            children: "1"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
-            src: "",
-            alt: "",
-            "class": "border flex-grow-1 m-2 h-100"
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          "class": "col-lg-2",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            "class": "card-body",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h5", {
-              "class": "card-title",
-              children: "\u52D5\u753B\u30BF\u30A4\u30C8\u30EB"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
-              "class": "card-text",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("small", {
-                "class": "text-muted",
-                children: "\u8A73\u7D30"
-              })
-            })]
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          "class": "col-lg-7 d-flex align-items-center",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            "class": "row g-0 flex-grow-1 text-center justify-content-between",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("a", {
-              href: "movieEdit.html",
-              "class": "col-lg-3 btn btn-secondary m-2",
-              children: "\u7DE8\u96C6"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-              "class": "col-lg-3 btn btn-secondary m-2",
-              children: "\u516C\u958B\uFF0F\u975E\u516C\u958B"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-              "class": "col-lg-4 btn btn-secondary fs-6 m-2",
-              children: "\u30EA\u30B9\u30C8\u304B\u3089\u524A\u9664"
-            })]
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          "class": "col-lg-1  d-flex align-items-center justify-content-around d-none d-lg-flex",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            "class": "btn-trigger",
-            id: "btn01",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {})]
-          })
-        })]
-      })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-      "class": "mb-3 border-bottom drag-list",
-      id: "list-1",
-      draggable: "true",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-        "class": "row g-0 align-items-stretch p-2",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-          "class": "col-lg-2 d-flex align-items-center justify-content-between",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-            children: "1"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
-            src: "",
-            alt: "",
-            "class": "border flex-grow-1 m-2 h-100"
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          "class": "col-lg-2",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            "class": "card-body",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h5", {
-              "class": "card-title",
-              children: "\u52D5\u753B\u30BF\u30A4\u30C8\u30EB"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
-              "class": "card-text",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("small", {
-                "class": "text-muted",
-                children: "\u8A73\u7D30"
-              })
-            })]
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          "class": "col-lg-7 d-flex align-items-center",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            "class": "row g-0 flex-grow-1 text-center justify-content-between",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("a", {
-              href: "movieEdit.html",
-              "class": "col-lg-3 btn btn-secondary m-2",
-              children: "\u7DE8\u96C6"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-              "class": "col-lg-3 btn btn-secondary m-2",
-              children: "\u516C\u958B\uFF0F\u975E\u516C\u958B"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-              "class": "col-lg-4 btn btn-secondary fs-6 m-2",
-              children: "\u30EA\u30B9\u30C8\u304B\u3089\u524A\u9664"
-            })]
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          "class": "col-lg-1  d-flex align-items-center justify-content-around d-none d-lg-flex",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            "class": "btn-trigger",
-            id: "btn01",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {})]
-          })
-        })]
-      })
+      children: SelectedItems
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
       "class": "row g-0 justify-content-center justify-content-around",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
-        type: "submit",
-        "class": "btn btn-secondary col-lg-4 m-3",
-        children: "\u30AD\u30E3\u30F3\u30BB\u30EB"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+      children: [DeleteButton, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
         type: "submit",
         "class": "btn btn-primary col-lg-4 m-3",
         children: "\u4F5C\u6210\u3059\u308B"
@@ -7737,16 +7963,841 @@ var CourseEditForm = function CourseEditForm() {
 };
 
 var selector = function selector(state) {
-  return {
+  var _ref;
+
+  return _ref = {
     movieData: state.movieSerch.movieData,
-    activePage: state.movieSerch.activePage,
-    itemsPerPage: state.movieSerch.itemsPerPage,
-    totalItemCount: state.movieSerch.totalItemCount,
-    search: state.movieSerch.search
-  };
+    itemData: state.courseData.itemData,
+    userData: state.courseData.userData,
+    courseEditData: state.courseData.courseEditData
+  }, _defineProperty(_ref, "itemData", state.courseData.itemData), _defineProperty(_ref, "activePage", state.movieSerch.activePage), _defineProperty(_ref, "itemsPerPage", state.movieSerch.itemsPerPage), _defineProperty(_ref, "totalItemCount", state.movieSerch.totalItemCount), _defineProperty(_ref, "search", state.movieSerch.search), _ref;
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CourseEditForm);
+
+/***/ }),
+
+/***/ "./resources/js/components/courseItem.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/courseItem.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+
+
+
+var CourseItem = function CourseItem(props) {
+  var status = props.value.open_flg == '1' ? '公開中' : '非公開';
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    var copyToClipboard = document.querySelectorAll('.copyToClipboard');
+    console.log(copyToClipboard);
+    copyToClipboard.forEach(function (target) {
+      target.addEventListener('click', function (event) {
+        // コピー対象をJavaScript上で変数として定義する
+        var copyTarget = event.target; // コピー対象のテキストを選択する
+
+        copyTarget.select(); // 選択しているテキストをクリップボードにコピーする
+
+        document.execCommand("Copy"); // コピーをお知らせする
+
+        alert("コピーできました！ : " + copyTarget.value);
+      });
+    });
+  }, [props]);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+    className: "row g-0 align-items-stretch p-2",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+      className: "col-lg-2 d-flex align-items-center",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("video", {
+        src: "",
+        alt: ""
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+      "class": "col-lg-3 d-flex align-items-center",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
+        href: "course-detail/" + props.value.id,
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          "class": "card-body",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
+            "class": "card-title",
+            children: props.value.name
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+            "class": "card-text",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("small", {
+              "class": "text-muted",
+              children: "\u8A73\u7D30"
+            })
+          })]
+        })
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+      "class": "col-lg-7 d-flex align-items-center",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        "class": "row g-0 flex-grow-1 text-center justify-content-around",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
+          href: "/course-edit/" + props.value.id,
+          "class": "col-lg-3 btn btn-secondary m-2",
+          children: "\u7DE8\u96C6"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          "class": "dropdown col-sm-3 m-2",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+            "class": "btn btn-secondary dropdown-toggle w-100",
+            type: "button",
+            id: "dropdownMenuButton",
+            "data-bs-toggle": "dropdown",
+            "aria-expanded": "false",
+            children: "\u5171\u6709\u30EA\u30F3\u30AF"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("ul", {
+            "class": "dropdown-menu",
+            "aria-labelledby": "dropdownMenuButton",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                type: "text",
+                "class": "dropdown-item copyToClipboard",
+                readOnly: true,
+                value: window.location.href + "course-detail/" + props.value.id
+              })
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          "class": "col-lg-3 btn btn-secondary m-2",
+          children: status
+        })]
+      })
+    })]
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CourseItem);
+
+/***/ }),
+
+/***/ "./resources/js/components/courseList.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/courseList.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _courseItem__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./courseItem */ "./resources/js/components/courseItem.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../actions */ "./resources/js/actions/index.js");
+/* harmony import */ var _pagenate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pagenate */ "./resources/js/components/pagenate.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var CourseList = function CourseList() {
+  var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(selector),
+      courseData = _useSelector.courseData,
+      search = _useSelector.search,
+      activePage = _useSelector.activePage,
+      itemsPerPage = _useSelector.itemsPerPage,
+      totalItemCount = _useSelector.totalItemCount;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    pageRange: 5,
+    list: [],
+    all: false
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      values = _useState2[0],
+      setValues = _useState2[1];
+
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_4__.SerchCourse)(''));
+  }, []);
+
+  var handlePageChange = function handlePageChange(num) {
+    dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_4__.SerchCourse)(search, num));
+  };
+
+  var CourseItems = courseData ? courseData.map(function (val, index) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      className: "mb-3 border-bottom",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_courseItem__WEBPACK_IMPORTED_MODULE_3__.default, {
+        value: val,
+        list: values.list
+      })
+    }, index);
+  }) : '';
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+    children: [CourseItems, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_pagenate__WEBPACK_IMPORTED_MODULE_5__.default, {
+      activePage: activePage,
+      itemsPerPage: itemsPerPage,
+      totalItemCount: totalItemCount,
+      pageRange: values.pageRange,
+      onChange: handlePageChange
+    })]
+  });
+};
+
+var selector = function selector(state) {
+  return {
+    courseData: state.courseSerch.courseData,
+    activePage: state.courseSerch.activePage,
+    itemsPerPage: state.courseSerch.itemsPerPage,
+    totalItemCount: state.courseSerch.totalItemCount,
+    search: state.courseSerch.search
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CourseList);
+
+/***/ }),
+
+/***/ "./resources/js/components/courseSerch.js":
+/*!************************************************!*\
+  !*** ./resources/js/components/courseSerch.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions */ "./resources/js/actions/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+
+
+
+var CourseSerch = function CourseSerch() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    keyword: "",
+    status_on: false,
+    status_off: false,
+    category_list: ""
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      values = _useState2[0],
+      setValues = _useState2[1];
+
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
+
+  var handleCourseSerch = function handleCourseSerch(e) {
+    e.preventDefault();
+    dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_3__.SerchCourse)(values));
+  };
+
+  var handleChange = function handleChange(e) {
+    var val = e.target.value;
+    var name = e.target.name;
+    setValues(_objectSpread(_objectSpread({}, values), {}, _defineProperty({}, name, val)));
+  };
+
+  var handleCheck = function handleCheck(e) {
+    var name = e.target.value;
+    setValues(_objectSpread(_objectSpread({}, values), {}, _defineProperty({}, name, e.target.checked)));
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+      className: "btn btn-primary w-100",
+      type: "button",
+      "data-bs-toggle": "modal",
+      "data-bs-target": "#exampleModal",
+      children: "\u30B3\u30FC\u30B9\u30E1\u30CB\u30E5\u30FC\u691C\u7D22"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      className: "modal fade",
+      id: "exampleModal",
+      tabIndex: "-1",
+      "aria-labelledby": "exampleModalLabel",
+      "aria-hidden": "true",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        className: "modal-dialog",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "modal-content",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "modal-header",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h5", {
+              className: "modal-title",
+              id: "exampleModalLabel",
+              children: "\u30B3\u30FC\u30B9\u30E1\u30CB\u30E5\u30FC\u691C\u7D22"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+              type: "button",
+              className: "btn-close",
+              "data-bs-dismiss": "modal",
+              "aria-label": "Close"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "modal-body",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
+              id: "mainform",
+              onSubmit: function onSubmit(e) {
+                handleCourseSerch(e);
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
+                htmlFor: "",
+                className: "form-label",
+                children: "\u30AD\u30FC\u30EF\u30FC\u30C9"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                type: "text",
+                name: "keyword",
+                className: "form-control w-100 mb-3",
+                onChange: function onChange(e) {
+                  handleChange(e);
+                },
+                value: values.keyword
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                className: "form-label",
+                children: "\u516C\u958B\u72B6\u6CC1"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                className: "form-check form-check-inline mb-3",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                  className: "form-check-input",
+                  type: "checkbox",
+                  name: "status_flg[]",
+                  value: "status_on",
+                  onChange: function onChange(e) {
+                    handleCheck(e);
+                  },
+                  checked: values.status_on
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
+                  className: "form-check-label",
+                  htmlFor: "",
+                  children: "\u516C\u958B\u4E2D"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                className: "form-check form-check-inline",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                  className: "form-check-input",
+                  type: "checkbox",
+                  name: "status_flg[]",
+                  value: "status_off",
+                  onChange: function onChange(e) {
+                    handleCheck(e);
+                  },
+                  checked: values.status_off
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
+                  className: "form-check-label",
+                  htmlFor: "",
+                  children: "\u975E\u516C\u958B"
+                })]
+              })]
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "modal-footer",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+              type: "button",
+              className: "btn btn-secondary",
+              "data-bs-dismiss": "modal",
+              "data-bs-target": "#exampleModal",
+              children: "\u9589\u3058\u308B"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+              type: "submit",
+              form: "mainform",
+              className: "btn btn-primary col-lg-4",
+              "data-bs-dismiss": "modal",
+              "data-bs-target": "#exampleModal",
+              children: "\u691C\u7D22\u3059\u308B"
+            })]
+          })]
+        })
+      })
+    })]
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CourseSerch);
+
+/***/ }),
+
+/***/ "./resources/js/components/mailList.js":
+/*!*********************************************!*\
+  !*** ./resources/js/components/mailList.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _mailListItem__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./mailListItem */ "./resources/js/components/mailListItem.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../actions */ "./resources/js/actions/index.js");
+/* harmony import */ var _pagenate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pagenate */ "./resources/js/components/pagenate.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+var MailList = function MailList() {
+  var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(selector),
+      mailListData = _useSelector.mailListData,
+      mailListDataTotal = _useSelector.mailListDataTotal,
+      trainerData = _useSelector.trainerData,
+      search = _useSelector.search,
+      activePage = _useSelector.activePage,
+      itemsPerPage = _useSelector.itemsPerPage,
+      totalItemCount = _useSelector.totalItemCount;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    pageRange: 5
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      values = _useState2[0],
+      setValues = _useState2[1];
+
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_4__.SerchMailList)(''));
+  }, []);
+
+  var handlePageChange = function handlePageChange(num) {
+    e.preventDefault();
+    dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_4__.SerchMailList)(search, num));
+  };
+
+  console.log(mailListData);
+  var MailListItems = mailListData ? Object.keys(mailListData).map(function (key) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mailListItem__WEBPACK_IMPORTED_MODULE_3__.default, {
+      value: mailListData[key],
+      total: mailListDataTotal[key],
+      name: key,
+      trainer_id: trainerData.find(function (val) {
+        return val.name == key;
+      }).id
+    }, key);
+  }) : '';
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+      className: "mb-3 border-bottom",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "row g-0 align-items-stretch p-2",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          "class": "col-lg-3 d-flex align-items-center",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+            children: "\u30C8\u30EC\u30FC\u30CA\u30FC\u540D"
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          "class": "col-lg-2 d-flex align-items-center",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+            children: "\u4ECA\u6708\u914D\u4FE1\u6570"
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          "class": "col-lg-2 d-flex align-items-center",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+            children: "\u5148\u6708\u914D\u4FE1\u6570"
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          "class": "col-lg-2 d-flex align-items-center",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+            children: "\u7DCF\u914D\u4FE1\u6570"
+          })
+        })]
+      })
+    }), MailListItems, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_pagenate__WEBPACK_IMPORTED_MODULE_5__.default, {
+      activePage: activePage,
+      itemsPerPage: itemsPerPage,
+      totalItemCount: totalItemCount,
+      pageRange: values.pageRange,
+      onChange: handlePageChange
+    })]
+  });
+};
+
+var selector = function selector(state) {
+  return {
+    mailListData: state.mailList.mailListData,
+    mailListDataTotal: state.mailList.mailListDataTotal,
+    trainerData: state.mailList.trainerData,
+    activePage: state.mailList.activePage,
+    itemsPerPage: state.mailList.itemsPerPage,
+    totalItemCount: state.mailList.totalItemCount,
+    search: state.mailList.search
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MailList);
+
+/***/ }),
+
+/***/ "./resources/js/components/mailListCSV.js":
+/*!************************************************!*\
+  !*** ./resources/js/components/mailListCSV.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+
+
+
+var MailListCSV = function MailListCSV() {
+  var handleMailListToCSV = function handleMailListToCSV(e) {
+    e.preventDefault();
+    axios__WEBPACK_IMPORTED_MODULE_3___default().get('/api/mailList-csv', {
+      params: []
+    }).then(function (res) {
+      function DateFormat(date, format) {
+        format = format.replace(/YYYY/, date.getFullYear());
+        format = format.replace(/MM/, date.getMonth() + 1);
+        return format;
+      }
+
+      var date = new Date();
+      var now_month = DateFormat(date, 'YYYY-MM');
+      var last_date = new Date(date.getFullYear(), date.getMonth() - 1, date.getDate());
+      var last_month = DateFormat(last_date, 'YYYY-MM');
+      var CSVdata = res.data;
+      console.log(CSVdata.mailList_data);
+      var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+      var data_csv = '';
+      data_csv += "トレーナー名,今月配信数,先月配信数,総配信数\n";
+      Object.keys(CSVdata.mailList_data).map(function (key) {
+        var _CSVdata$mailList_dat, _CSVdata$mailList_dat2;
+
+        console.log('now_month_total');
+        var now_month_total = (_CSVdata$mailList_dat = CSVdata.mailList_data[key].find(function (val) {
+          return val.send_month == now_month;
+        })) !== null && _CSVdata$mailList_dat !== void 0 ? _CSVdata$mailList_dat : 0;
+        now_month_total = now_month_total ? now_month_total.total : 0;
+        var last_month_total = (_CSVdata$mailList_dat2 = CSVdata.mailList_data[key].find(function (val) {
+          return val.send_month == last_month;
+        })) !== null && _CSVdata$mailList_dat2 !== void 0 ? _CSVdata$mailList_dat2 : 0;
+        last_month_total = last_month_total ? last_month_total.total : 0;
+        var total_count = CSVdata.mailList_total[key];
+        console.log(now_month_total);
+        data_csv += key + "," + now_month_total + ',' + last_month_total + ',' + total_count + "\n";
+      });
+      var blob = new Blob([bom, data_csv], {
+        "type": "text/csv"
+      }); //data_csvのデータをcsvとしてダウンロードする関数
+
+      var url = window.URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "mailListData.csv"; //フォーマットによってファイル拡張子を変えている
+
+      a.click();
+      a.remove();
+      data_csv = '';
+    })["catch"](function (error) {});
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+    href: "#",
+    className: "w-100 text-white",
+    onClick: function onClick(e) {
+      handleMailListToCSV(e);
+    },
+    id: "download",
+    download: "test.csv",
+    children: "CSV\u51FA\u529B"
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MailListCSV);
+
+/***/ }),
+
+/***/ "./resources/js/components/mailListDetailCSV.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/mailListDetailCSV.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+
+
+
+var MailListDetailCSV = function MailListDetailCSV() {
+  var trainer_id = window.location.pathname.replace('/admin/mail-list-detail/', '');
+  console.log('trainer_id: ' + trainer_id);
+
+  var handleMailListToCSV = function handleMailListToCSV(e) {
+    e.preventDefault();
+    axios__WEBPACK_IMPORTED_MODULE_3___default().get('/api/mailListDetail-csv', {
+      params: {
+        'trainer_id': trainer_id
+      }
+    }).then(function (res) {
+      function DateFormat(date, format) {
+        format = format.replace(/YYYY/, date.getFullYear());
+        format = format.replace(/MM/, date.getMonth() + 1);
+        return format;
+      }
+
+      var date = new Date();
+      var now_month = DateFormat(date, 'YYYY-MM');
+      var last_date = new Date(date.getFullYear(), date.getMonth() - 1, date.getDate());
+      var last_month = DateFormat(last_date, 'YYYY-MM');
+      var CSVdata = res.data;
+      console.log(CSVdata);
+      var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+      var data_csv = '';
+      data_csv += "配信月,配信数\n";
+
+      var _loop = function _loop(i) {
+        var _CSVdata$find;
+
+        var target_date = new Date(date.getFullYear(), date.getMonth() - i, date.getDate());
+        var target_month = DateFormat(target_date, 'YYYY-MM');
+        var target_total = (_CSVdata$find = CSVdata.find(function (val) {
+          return val.send_month == target_month;
+        })) !== null && _CSVdata$find !== void 0 ? _CSVdata$find : 0;
+        target_total = target_total ? target_total.total : 0;
+        data_csv += target_month + "," + target_total + "\n";
+      };
+
+      for (var i = 0; i < 12; i++) {
+        _loop(i);
+      }
+
+      var blob = new Blob([bom, data_csv], {
+        "type": "text/csv"
+      }); //data_csvのデータをcsvとしてダウンロードする関数
+
+      var url = window.URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "mailListData.csv"; //フォーマットによってファイル拡張子を変えている
+
+      a.click();
+      a.remove();
+      data_csv = '';
+    })["catch"](function (error) {});
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+    href: "#",
+    className: "w-100 text-white",
+    onClick: function onClick(e) {
+      handleMailListToCSV(e);
+    },
+    id: "download",
+    download: "test.csv",
+    children: "CSV\u51FA\u529B"
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MailListDetailCSV);
+
+/***/ }),
+
+/***/ "./resources/js/components/mailListItem.js":
+/*!*************************************************!*\
+  !*** ./resources/js/components/mailListItem.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+
+
+
+
+var MailListItem = function MailListItem(props) {
+  var now_month_total = 0;
+  var last_month_total = 0;
+  console.log(props.name);
+  console.log(props.trainer_id);
+
+  if (props.value) {
+    var _props$value$find, _props$value$find2;
+
+    var DateFormat = function DateFormat(date, format) {
+      format = format.replace(/YYYY/, date.getFullYear());
+      format = format.replace(/MM/, date.getMonth() + 1);
+      return format;
+    };
+
+    var date = new Date();
+    var now_month = DateFormat(date, 'YYYY-MM');
+    var last_date = new Date(date.getFullYear(), date.getMonth() - 1, date.getDate());
+    var last_month = DateFormat(last_date, 'YYYY-MM');
+    now_month_total = (_props$value$find = props.value.find(function (val) {
+      return val.send_month == now_month;
+    })) !== null && _props$value$find !== void 0 ? _props$value$find : 0;
+    console.log(now_month_total);
+    last_month_total = (_props$value$find2 = props.value.find(function (val) {
+      return val.send_month == last_month;
+    })) !== null && _props$value$find2 !== void 0 ? _props$value$find2 : 0;
+    console.log(last_month_total);
+  }
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+    className: "mb-3 border-bottom",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+      className: "row g-0 align-items-stretch p-2",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        "class": "col-lg-3 d-flex align-items-center",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+          children: props.name
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        "class": "col-lg-2 d-flex align-items-center",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+          children: now_month_total ? now_month_total.total : 0
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        "class": "col-lg-2 d-flex align-items-center",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+          children: last_month_total ? last_month_total.total : 0
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        "class": "col-lg-2 d-flex align-items-center",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+          children: props.total
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+        href: "/admin/mail-list-detail/" + props.trainer_id,
+        "class": "btn btn-secondary text-center col-lg-2 align-items-center",
+        type: "button",
+        children: "\u8A73\u7D30"
+      })]
+    })
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MailListItem);
 
 /***/ }),
 
@@ -7963,7 +9014,11 @@ var MovieList = function MovieList() {
 
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_4__.SerchMovie)(''));
+    var params = new URL(document.location).searchParams;
+    var category_id = params.get('category_id');
+    dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_4__.SerchMovie)({
+      'category_id': category_id
+    }));
   }, []);
 
   var handlePageChange = function handlePageChange(num) {
@@ -8032,6 +9087,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pagenate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pagenate */ "./resources/js/components/pagenate.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _movieSerch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./movieSerch */ "./resources/js/components/movieSerch.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
@@ -8074,10 +9130,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var movieSelect = function movieSelect() {
+var movieSelect = function movieSelect(props) {
   var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(selector),
       movieData = _useSelector.movieData,
-      selectedData = _useSelector.selectedData,
+      movieAll = _useSelector.movieAll,
+      itemData = _useSelector.itemData,
       search = _useSelector.search,
       activePage = _useSelector.activePage,
       itemsPerPage = _useSelector.itemsPerPage,
@@ -8102,7 +9159,7 @@ var movieSelect = function movieSelect() {
   };
 
   var handleSelectList = function handleSelectList(e) {
-    var list = _toConsumableArray(values.list);
+    var list = _toConsumableArray(itemData);
 
     var id = e.target.dataset.index;
     var newList = [];
@@ -8122,18 +9179,18 @@ var movieSelect = function movieSelect() {
     }
 
     console.log(newList);
-    setValues(_objectSpread(_objectSpread({}, values), {}, _defineProperty({}, 'list', newList)));
+    dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_3__.SelectMovie)(newList));
   };
 
   var handleAllList = function handleAllList(e) {
+    var newList = _toConsumableArray(movieAll);
+
     if (!values.all) {
-      var _objectSpread3;
-
-      setValues(_objectSpread(_objectSpread({}, values), {}, (_objectSpread3 = {}, _defineProperty(_objectSpread3, 'list', studentAll), _defineProperty(_objectSpread3, 'all', !values.all), _objectSpread3)));
+      dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_3__.SelectMovie)(newList));
+      setValues(_objectSpread(_objectSpread({}, values), {}, _defineProperty({}, 'all', !values.all)));
     } else {
-      var _objectSpread4;
-
-      setValues(_objectSpread(_objectSpread({}, values), {}, (_objectSpread4 = {}, _defineProperty(_objectSpread4, 'list', []), _defineProperty(_objectSpread4, 'all', !values.all), _objectSpread4)));
+      dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_3__.SelectMovie)([]));
+      setValues(_objectSpread(_objectSpread({}, values), {}, _defineProperty({}, 'all', !values.all)));
     }
   };
 
@@ -8154,7 +9211,9 @@ var movieSelect = function movieSelect() {
               onChange: function onChange(e) {
                 handleSelectList(e);
               },
-              checked: Boolean(values.list.indexOf(String(val.id)) >= 0)
+              checked: Boolean(itemData.findIndex(function (array) {
+                return array.id == val.id;
+              }) >= 0)
             })
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
@@ -8185,7 +9244,7 @@ var movieSelect = function movieSelect() {
       })
     }, index);
   }) : '';
-  var SelectedItems = values.list ? values.list.map(function (val, index) {
+  var SelectedItems = itemData ? itemData.map(function (val, index) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
       "class": "mb-3 border-bottom",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
@@ -8197,7 +9256,13 @@ var movieSelect = function movieSelect() {
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
               "class": "form-check-input",
               type: "checkbox",
-              value: val.id
+              value: val.id,
+              onChange: function onChange(e) {
+                handleSelectList(e);
+              },
+              checked: Boolean(itemData.findIndex(function (array) {
+                return array.id == val.id;
+              }) >= 0)
             })
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
@@ -8208,25 +9273,22 @@ var movieSelect = function movieSelect() {
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
           "class": "col-lg-8",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("a", {
-            href: "movie-detail/" + val.id,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-              "class": "card-body",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h5", {
-                "class": "card-title",
-                children: val.name
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
-                "class": "card-text",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("small", {
-                  "class": "text-muted",
-                  children: "\u8A73\u7D30"
-                })
-              })]
-            })
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+            "class": "card-body",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h5", {
+              "class": "card-title",
+              children: val.name
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+              "class": "card-text",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("a", {
+                href: "movie-detail/" + val.id,
+                children: "\u8A73\u7D30"
+              })
+            })]
           })
         })]
       })
-    });
+    }, index);
   }) : '';
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("form", {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
@@ -8271,87 +9333,13 @@ var movieSelect = function movieSelect() {
       totalItemCount: totalItemCount,
       pageRange: values.pageRange,
       onChange: handlePageChange
-    }), SelectedItems, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
       "class": "border-bottom border-3 p-2 mb-3",
       children: "\u9078\u629E\u6E08\u307F\u52D5\u753B"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-      "class": "mb-3 border-bottom",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-        "class": "row g-0 align-items-stretch p-2",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          "class": "col-lg-1 d-flex align-items-center",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-            "class": "form-check",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
-              "class": "form-check-input",
-              type: "checkbox",
-              value: ""
-            })
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          "class": "col-lg-3 border",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
-            src: "",
-            alt: ""
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          "class": "col-lg-8",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            "class": "card-body",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h5", {
-              "class": "card-title",
-              children: "\u52D5\u753B\u30BF\u30A4\u30C8\u30EB"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
-              "class": "card-text",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("small", {
-                "class": "text-muted",
-                children: "\u8A73\u7D30"
-              })
-            })]
-          })
-        })]
-      })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-      "class": "mb-3 border-bottom",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-        "class": "row g-0 align-items-stretch p-2",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          "class": "col-lg-1 d-flex align-items-center",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-            "class": "form-check",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
-              "class": "form-check-input",
-              type: "checkbox",
-              value: ""
-            })
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          "class": "col-lg-3 border",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
-            src: "",
-            alt: ""
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          "class": "col-lg-8",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            "class": "card-body",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h5", {
-              "class": "card-title",
-              children: "\u52D5\u753B\u30BF\u30A4\u30C8\u30EB"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
-              "class": "card-text",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("small", {
-                "class": "text-muted",
-                children: "\u8A73\u7D30"
-              })
-            })]
-          })
-        })]
-      })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+    }), SelectedItems, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
       "class": "row g-0 justify-content-center mb-3",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
-        type: "submit",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+        to: "/course-edit/" + props.id,
         "class": "btn btn-primary col-lg-6",
         children: "\u30B3\u30FC\u30B9\u30E1\u30CB\u30E5\u30FC\u306B\u8FFD\u52A0"
       })
@@ -8362,7 +9350,8 @@ var movieSelect = function movieSelect() {
 var selector = function selector(state) {
   return {
     movieData: state.movieSerch.movieData,
-    selectedData: state.movieSerch.selectedData,
+    movieAll: state.movieSerch.movieAll,
+    itemData: state.courseData.itemData,
     activePage: state.movieSerch.activePage,
     itemsPerPage: state.movieSerch.itemsPerPage,
     totalItemCount: state.movieSerch.totalItemCount,
@@ -8424,7 +9413,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var MovieSerch = function MovieSerch() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     keyword: "",
-    class_id: "",
+    category_id: "",
     status_on: false,
     status_off: false,
     category_list: ""
@@ -8440,7 +9429,7 @@ var MovieSerch = function MovieSerch() {
     })["catch"](function (error) {});
   }, []);
 
-  var handleStudentSerch = function handleStudentSerch(e) {
+  var handleMovieSerch = function handleMovieSerch(e) {
     e.preventDefault();
     dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_3__.SerchMovie)(values));
   };
@@ -8468,7 +9457,7 @@ var MovieSerch = function MovieSerch() {
       type: "button",
       "data-bs-toggle": "modal",
       "data-bs-target": "#exampleModal",
-      children: "\u751F\u5F92\u691C\u7D22"
+      children: "\u52D5\u753B\u691C\u7D22"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
       className: "modal fade",
       id: "exampleModal",
@@ -8484,7 +9473,7 @@ var MovieSerch = function MovieSerch() {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h5", {
               className: "modal-title",
               id: "exampleModalLabel",
-              children: "\u751F\u5F92\u691C\u7D22"
+              children: "\u52D5\u753B\u691C\u7D22"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
               type: "button",
               className: "btn-close",
@@ -8496,7 +9485,7 @@ var MovieSerch = function MovieSerch() {
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
               id: "mainform",
               onSubmit: function onSubmit(e) {
-                handleStudentSerch(e);
+                handleMovieSerch(e);
               },
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
                 htmlFor: "",
@@ -8513,11 +9502,11 @@ var MovieSerch = function MovieSerch() {
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
                 htmlFor: "",
                 className: "form-label",
-                children: "\u6240\u5C5E"
+                children: "\u30AB\u30C6\u30B4\u30EA"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("select", {
                 className: "form-select mb-3",
                 "aria-label": "Default select example",
-                name: "class_id",
+                name: "category_id",
                 onChange: function onChange(e) {
                   handleChange(e);
                 },
@@ -8528,7 +9517,7 @@ var MovieSerch = function MovieSerch() {
                 }), CategoryLists]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
                 className: "form-label",
-                children: "\u53C2\u52A0\u72B6\u6CC1"
+                children: "\u516C\u958B\u72B6\u6CC1"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                 className: "form-check form-check-inline mb-3",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
@@ -8543,7 +9532,7 @@ var MovieSerch = function MovieSerch() {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
                   className: "form-check-label",
                   htmlFor: "",
-                  children: "\u53C2\u52A0\u4E2D"
+                  children: "\u516C\u958B\u4E2D"
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                 className: "form-check form-check-inline",
@@ -8559,7 +9548,7 @@ var MovieSerch = function MovieSerch() {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
                   className: "form-check-label",
                   htmlFor: "",
-                  children: "\u9000\u4F1A"
+                  children: "\u975E\u516C\u958B"
                 })]
               })]
             })
@@ -9015,6 +10004,7 @@ var StudentList = function StudentList() {
     }).then(function (res) {})["catch"](function (error) {});
   };
 
+  console.log(studentData);
   var StudentItems = studentData ? studentData.map(function (val, index) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_studentItem__WEBPACK_IMPORTED_MODULE_3__.default, {
       value: val,
@@ -9763,6 +10753,115 @@ var TrainerSerch = function TrainerSerch() {
 
 /***/ }),
 
+/***/ "./resources/js/reducers/courseData.js":
+/*!*********************************************!*\
+  !*** ./resources/js/reducers/courseData.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var initState = {
+  userData: [],
+  courseEditData: '',
+  itemData: []
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case 'FETCH_COURSE_REQUEST':
+      //object.assign stateのコピーをとる
+      return true;
+
+    case 'FETCH_COURSE_SUCCESS':
+      //object.assign stateのコピーをとる
+      console.log(action.data);
+      return Object.assign({}, state, {
+        userData: action.data.user_id,
+        courseEditData: action.data.course_data,
+        itemData: action.data.item_data
+      });
+
+    case 'CHANGE_COURSE_DATA':
+      //object.assign stateのコピーをとる
+      console.log(action.data);
+      return Object.assign({}, state, {
+        courseEditData: action.data
+      });
+
+    case 'FETCH_SELECTMOVIE':
+      //object.assign stateのコピーをとる
+      return Object.assign({}, state, {
+        itemData: action.data
+      });
+
+    default:
+      return state;
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/reducers/courseSerch.js":
+/*!**********************************************!*\
+  !*** ./resources/js/reducers/courseSerch.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var initState = {
+  keyword: '',
+  status_on: false,
+  status_off: false,
+  courseData: '',
+  search: '',
+  activePage: '',
+  itemsPerPage: '',
+  totalItemCount: '',
+  loading: false
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case 'FETCH_COURSELIST_REQUEST':
+      //object.assign stateのコピーをとる
+      return Object.assign({}, state, {
+        keyword: action.data.keyword,
+        status_on: action.data.status_on,
+        status_off: action.data.status_off,
+        search: action.data,
+        loading: true
+      });
+
+    case 'FETCH_COURSELIST_SUCCESS':
+      //object.assign stateのコピーをとる
+      //console.log(action.data.movie_data);
+      return Object.assign({}, state, {
+        courseData: action.data.data,
+        activePage: action.data.current_page,
+        itemsPerPage: action.data.per_page,
+        totalItemCount: action.data.total,
+        loading: false
+      });
+
+    default:
+      return state;
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/reducers/index.js":
 /*!****************************************!*\
   !*** ./resources/js/reducers/index.js ***!
@@ -9774,20 +10873,115 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _trainerSerch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./trainerSerch */ "./resources/js/reducers/trainerSerch.js");
 /* harmony import */ var _studentSerch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./studentSerch */ "./resources/js/reducers/studentSerch.js");
 /* harmony import */ var _movieSerch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./movieSerch */ "./resources/js/reducers/movieSerch.js");
+/* harmony import */ var _movieSelect__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./movieSelect */ "./resources/js/reducers/movieSelect.js");
+/* harmony import */ var _courseData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./courseData */ "./resources/js/reducers/courseData.js");
+/* harmony import */ var _courseSerch__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./courseSerch */ "./resources/js/reducers/courseSerch.js");
+/* harmony import */ var _mailList__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./mailList */ "./resources/js/reducers/mailList.js");
 
 
 
 
-var reducer = (0,redux__WEBPACK_IMPORTED_MODULE_3__.combineReducers)({
+
+
+
+
+var reducer = (0,redux__WEBPACK_IMPORTED_MODULE_7__.combineReducers)({
   trainerSerch: _trainerSerch__WEBPACK_IMPORTED_MODULE_0__.default,
   studentSerch: _studentSerch__WEBPACK_IMPORTED_MODULE_1__.default,
-  movieSerch: _movieSerch__WEBPACK_IMPORTED_MODULE_2__.default
+  movieSerch: _movieSerch__WEBPACK_IMPORTED_MODULE_2__.default,
+  courseData: _courseData__WEBPACK_IMPORTED_MODULE_4__.default,
+  courseSerch: _courseSerch__WEBPACK_IMPORTED_MODULE_5__.default,
+  mailList: _mailList__WEBPACK_IMPORTED_MODULE_6__.default
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (reducer);
+
+/***/ }),
+
+/***/ "./resources/js/reducers/mailList.js":
+/*!*******************************************!*\
+  !*** ./resources/js/reducers/mailList.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var initState = {
+  mailListData: '',
+  mailListDataTotal: '',
+  trainerData: '',
+  activePage: '',
+  itemsPerPage: '',
+  totalItemCount: '',
+  loading: false
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case 'FETCH_MAILLIST_REQUEST':
+      //object.assign stateのコピーをとる
+      return Object.assign({}, state, {
+        loading: true
+      });
+
+    case 'FETCH_MAILLIST_SUCCESS':
+      //object.assign stateのコピーをとる
+      console.log(action.data);
+      return Object.assign({}, state, {
+        mailListData: action.data.mailList_data,
+        mailListDataTotal: action.data.mailList_total,
+        trainerData: action.data.trainer_data.data,
+        activePage: action.data.trainer_data.current_page,
+        itemsPerPage: action.data.trainer_data.per_page,
+        totalItemCount: action.data.trainer_data.total,
+        loading: false
+      });
+
+    default:
+      return state;
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/reducers/movieSelect.js":
+/*!**********************************************!*\
+  !*** ./resources/js/reducers/movieSelect.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var initState = {
+  selectedData: []
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  console.log(action.data);
+
+  switch (action.type) {
+    case 'FETCH_SELECTMOVIE':
+      //object.assign stateのコピーをとる
+      return Object.assign({}, state, {
+        selectedData: action.data
+      });
+
+    default:
+      return state;
+  }
+});
 
 /***/ }),
 
@@ -9804,10 +10998,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var initState = {
   keyword: '',
-  category: '',
+  category_id: '',
   status_on: false,
   status_off: false,
   movieData: '',
+  movieAll: '',
   search: '',
   activePage: '',
   itemsPerPage: '',
@@ -9823,7 +11018,7 @@ var initState = {
       //object.assign stateのコピーをとる
       return Object.assign({}, state, {
         keyword: action.data.keyword,
-        category: action.data.category,
+        category_id: action.data.category_id,
         status_on: action.data.status_on,
         status_off: action.data.status_off,
         search: action.data,
@@ -9832,11 +11027,13 @@ var initState = {
 
     case 'FETCH_MOVIE_SUCCESS':
       //object.assign stateのコピーをとる
+      //console.log(action.data.movie_data);
       return Object.assign({}, state, {
-        movieData: action.data.data,
-        activePage: action.data.current_page,
-        itemsPerPage: action.data.per_page,
-        totalItemCount: action.data.total,
+        movieData: action.data.movie_data.data,
+        movieAll: action.data.movie_all,
+        activePage: action.data.movie_data.current_page,
+        itemsPerPage: action.data.movie_data.per_page,
+        totalItemCount: action.data.movie_data.total,
         loading: false
       });
 

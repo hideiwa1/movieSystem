@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\Auth\DashboardController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MailController;
 
 Route::get('/', function () {
     return view('admin.welcome');
@@ -19,11 +21,11 @@ Route::middleware('auth:admins')->group(function () {
 });
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
-    ->middleware('guest')
+    ->middleware('auth:admins')
     ->name('register');
 
 Route::post('/register', [RegisteredUserController::class, 'store'])
-    ->middleware('guest');
+    ->middleware('auth:admins');
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
     ->middleware('guest')
@@ -70,3 +72,27 @@ Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth:admins')
     ->name('logout');
+
+Route::get('/acount', [AdminController::class, 'list'])
+    ->middleware('auth:admins')
+    ->name('list');
+
+Route::get('/edit/{id}', [AdminController::class, 'edit'])
+    ->middleware('auth:admins')
+    ->name('edit');
+
+Route::post('/edit/{id}', [AdminController::class, 'update'])
+    ->middleware('auth:admins')
+    ->name('update');
+
+Route::post('/delete/{id}', [AdminController::class, 'delete'])
+    ->middleware('auth:admins')
+    ->name('delete');
+
+Route::get('/mail-list', [MailController::class, 'list'])
+    ->middleware('auth:admins')
+    ->name('mail.list');
+
+Route::get('/mail-list-detail/{id}', [MailController::class, 'detail'])
+    ->middleware('auth:admins')
+    ->name('mail.detail');

@@ -61,6 +61,7 @@ const StudentList = () => {
         .catch((error)=>{});
     };
 
+    console.log(studentData);
     const StudentItems = studentData ? studentData.map((val, index) => (
         <StudentItem value={val} key={index} onChange={handleMailList} list={values.list} />
         )) : '';

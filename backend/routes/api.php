@@ -9,6 +9,8 @@ use App\Http\Controllers\StudentClassController;
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\MovieCategoryController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\MailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,13 @@ Route::get('/student-list', [StudentController::class, 'search']);
 Route::get('/student-csv', [StudentController::class, 'csv']);
 
 Route::get('/movie-list', [MovieController::class, 'search']);
+
+Route::get('/course-data', [CourseController::class, 'editData']);
+Route::get('/course-list', [CourseController::class, 'search']);
+
+Route::get('/mail-list', [MailController::class, 'search']);
+Route::get('/mailList-csv', [MailController::class, 'csv']);
+Route::get('/mailListDetail-csv', [MailController::class, 'detailCsv']);
 
 Route::get('/class-list', [StudentClassController::class, 'list']);
 Route::get('/movie-category-list', [MovieCategoryController::class, 'list']);

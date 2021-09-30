@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from "react";
 import MovieItem from "./movieItem";
-import {SerchMovie} from '../actions';
+import {SerchMovie, CourseData, SelectMovie} from '../actions';
 import Pagenate from "./pagenate";
 import axios from 'axios';
 import {BrowserRouter,Switch,Route,Link} from 'react-router-dom';
@@ -17,9 +17,7 @@ const CourseEdit = () => {
     const {movieData, search, activePage, itemsPerPage, totalItemCount} = useSelector(selector);
 
     const [values, setValues] = useState({
-        pageRange: 5,
-        list: [],
-        all: false,
+        course_id: window.location.pathname.replace('/course-edit/', ''),
       });
 
     const dispatch = useDispatch();
@@ -27,8 +25,10 @@ const CourseEdit = () => {
     useEffect(() => {
         
             dispatch(SerchMovie(''));
-        
+            dispatch(CourseData(window.location.pathname.replace('/course-edit/', '')));
+            
     }, []);
+
 
     const handlePageChange = (num) => {
         dispatch(SerchMovie(search, num));
@@ -44,12 +44,12 @@ const CourseEdit = () => {
             
             <Switch>
                 <Route path='/movie-select'>
-                    <MovieSelect />
-                    <Link to='/course-edit'>Home</Link>
+                    <MovieSelect id={values.course_id}/>
+
                 </Route>
-                <Route path='/course-edit' exact>
-                    <CourseEditForm />
-                    <Link to='/movie-select'>movie-select</Link>
+                <Route path='/course-edit'>
+                    <CourseEditForm  id={values.course_id}/>
+
                 </Route>
             </Switch>
             </div>

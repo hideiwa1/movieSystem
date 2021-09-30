@@ -22,6 +22,12 @@ import MovieSerch from './components/movieSerch';
 import MovieList from './components/movieList';
 
 import CourseEdit from './components/courseEdit';
+import CourseSerch from './components/courseSerch';
+import CourseList from './components/courseList';
+
+import MailList from './components/mailList';
+import MailListCSV from './components/mailListCSV';
+import MailListDetailCSV from './components/mailListDetailCSV';
 
 import Example from './components/Example';
 
@@ -117,5 +123,50 @@ if (document.getElementById('CourseEdit')) {
             <CourseEdit />
         </Provider>,
     document.getElementById('CourseEdit')
+    );
+}
+
+if (document.getElementById('CourseSerch')) {
+    ReactDOM.render(
+        <Provider store = {store} >
+            <CourseSerch />
+        </Provider>,
+    document.getElementById('CourseSerch')
+    );
+}
+
+if (document.getElementById('CourseList')) {
+    ReactDOM.render(
+        <Provider store = {store} >
+            <CourseList />
+        </Provider>,
+    document.getElementById('CourseList')
+    );
+}
+
+if (document.getElementById('MailList')) {
+    ReactDOM.render(
+        <Provider store = {store} >
+            <MailList />
+        </Provider>,
+    document.getElementById('MailList')
+    );
+}
+
+if (document.getElementById('MailListCSV')) {
+    ReactDOM.render(
+        <Provider store = {store} >
+            <MailListCSV />
+        </Provider>,
+    document.getElementById('MailListCSV')
+    );
+}
+
+if (document.getElementById('MailListDetailCSV')) {
+    ReactDOM.render(
+        <Provider store = {store} >
+            <MailListDetailCSV />
+        </Provider>,
+    document.getElementById('MailListDetailCSV')
     );
 }

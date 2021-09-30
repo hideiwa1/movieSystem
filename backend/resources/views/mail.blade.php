@@ -1,5 +1,7 @@
 <x-app-layout>
-
+    <x-breadcrumb>
+        <li class="breadcrumb-item active" aria-current="page">メール配信</li>
+    </x-breadcrumb>
     <x-content>
 
     <x-slot name="submenu">

@@ -22,17 +22,17 @@
                         @if(Auth::guard('admins')->check())
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0 col-lg-9  justify-content-around">
                             <li class="nav-item p-3 p-lg-0">
-                                <a href="movieList.html" class="text-body">動画一覧</a>
+                                <a href="{{ route('movie.list') }}" class="text-body">動画一覧</a>
                             </li>
                             <li class="nav-item p-3 p-lg-0">
-                                <a href="trainerList.html" class="text-body">トレーナー一覧</a>
+                                <a href="{{ route('trainer.list') }}" class="text-body">トレーナー一覧</a>
                             </li>
                             <li class="nav-item p-3 p-lg-0">
-                                <a href="studentList.html" class="text-body">生徒一覧</a>
+                                <a href="{{ route('student.list') }}" class="text-body">生徒一覧</a>
                             </li>
 
                             <li class="nav-item p-3 p-lg-0">
-                                <a href="mail.html" class="text-body">メール配信</a>
+                                <a href="{{ route('mail.show') }}" class="text-body">メール配信</a>
                             </li>
                         </ul>
                         @else

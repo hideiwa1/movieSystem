@@ -1,4 +1,7 @@
 <x-app-layout>
+    <x-breadcrumb>
+        <li class="breadcrumb-item active" aria-current="page">トレーナー一覧</li>
+    </x-breadcrumb>
 
     <x-content>
 

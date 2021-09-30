@@ -1,4 +1,8 @@
 <x-app-layout>
+    <x-breadcrumb>
+        <li class="breadcrumb-item"><a href="{{ route('movie.list') }}">動画一覧</a></li>
+        <li class="breadcrumb-item active" aria-current="page">動画情報　編集</li>
+    </x-breadcrumb>
 
     <x-content>
 
@@ -101,7 +105,7 @@
 
             <!-- category -->
             <div class="mb-3">
-            <x-label-block for="category_id" :value="__('category')" />
+            <x-label-block for="category_id" :value="__('カテゴリ')" />
                 <div class="">
                     <select class="form-select" name="category_id" aria-label="Default select example">
                         @foreach($category_data as $key => $val)
@@ -113,7 +117,7 @@
 
             <!-- status -->
             <div class="mb-3">
-                <x-label-block for="open_flg" :value="__('status')" />
+                <x-label-block for="open_flg" :value="__('公開フラグ')" />
                 <div class="mb-3">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="open_flg" value="1" {{ (old('open_flg') == '1' ? 'checked': ($movie_data ? ($movie_data -> open_flg == '1') : '' )) ? 'checked': ''}}>

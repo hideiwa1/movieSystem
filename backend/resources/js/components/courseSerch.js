@@ -5,13 +5,12 @@ import {Provider} from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from "react";
 
-import {SerchMovie} from '../actions';
+import {SerchCourse} from '../actions';
 import axios from 'axios';
 
-const MovieSerch = () => {
+const CourseSerch = () => {
     const [values, setValues] = useState({
         keyword: "",
-        category_id: "",
         status_on: false,
         status_off: false,
         category_list: "",
@@ -19,19 +18,9 @@ const MovieSerch = () => {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        
-        axios.get('/api/movie-category-list/')
-        .then((res) => {
-            setValues({...values, ['category_list']: res.data});
-        })
-        .catch((error)=>{});
-    
-    }, []);
-
-    const handleMovieSerch = (e) => {
+    const handleCourseSerch = (e) => {
         e.preventDefault();
-        dispatch(SerchMovie(values));
+        dispatch(SerchCourse(values));
     };
 
     const handleChange = (e) => {
@@ -46,15 +35,13 @@ const MovieSerch = () => {
     };
 
 
-    const CategoryLists = values.category_list ? values.category_list.map((val, index) => (
-        <option value={val.id} key={index}>{val.name}</option>
-        )) : '';
+
 
     return (
         <div>
             <button className="btn btn-primary w-100" type="button" data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
-                動画検索
+                コースメニュー検索
             </button>
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -62,22 +49,14 @@ const MovieSerch = () => {
                     <div className="modal-content">
 
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">動画検索</h5>
+                            <h5 className="modal-title" id="exampleModalLabel">コースメニュー検索</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <form id="mainform" onSubmit={(e)=>{handleMovieSerch(e)}}>
+                            <form id="mainform" onSubmit={(e)=>{handleCourseSerch(e)}}>
                                 <label htmlFor="" className="form-label">キーワード</label>
                                 <input type="text" name="keyword" className="form-control w-100 mb-3" onChange={(e)=>{handleChange(e);}} value={values.keyword}/>
-
-                                <label htmlFor="" className="form-label">カテゴリ</label>
-                                <select className="form-select mb-3" aria-label="Default select example" name='category_id' onChange={(e)=>{handleChange(e);}} value={values.class_id}>
-                                    <option value=''>全て</option>
-                                    
-                                    {CategoryLists}
-                                    
-                                </select>
 
                                 <p className="form-label">公開状況</p>
                                 <div className="form-check form-check-inline mb-3">
@@ -109,4 +88,4 @@ const MovieSerch = () => {
     )
 };
 
-export default MovieSerch;
+export default CourseSerch;
